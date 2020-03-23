@@ -100,4 +100,12 @@ public class ParkingLotTest {
         boolean capacityFull = owner.isCapacityFull();
         Assert.assertFalse(capacityFull);
     }
+
+    @Test
+    public void givenCar_ParkingAttendantShouldParkTheCar() {
+        ParkingAttendant parkingAttendant = new ParkingAttendant();
+        parkingAttendant.parkTheCar(vehicle);
+        boolean isParked = parkingLotSystem.isVehicleParked(vehicle);
+        Assert.assertFalse(isParked);
+    }
 }
