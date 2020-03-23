@@ -9,6 +9,10 @@ public class ParkingLotSystem {
     private List vehicles;
     private List<ParkingLotObserver> observers;
 
+    public ParkingLotSystem() {
+
+    }
+
     public ParkingLotSystem(int capacity) {
         this.observers = new ArrayList<>();
         this.vehicles = new ArrayList();
@@ -52,5 +56,15 @@ public class ParkingLotSystem {
             return true;
         }
         return false;
+    }
+
+    public void parkingAttendant(Object vehicle) throws ParkingLotException {
+        this.park(vehicle);
+    }
+
+    public int findMyCar(Object vehicle) throws ParkingLotException {
+        if(this.vehicles.contains(vehicle))
+        return this.vehicles.indexOf(vehicle);
+        throw new ParkingLotException("Car is not Parked");
     }
 }
