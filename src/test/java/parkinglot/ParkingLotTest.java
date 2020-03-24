@@ -137,13 +137,8 @@ public class ParkingLotTest {
 
     @Test
     public void givenCarNotParked_ShouldThrowAnExcption() {
-        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(2);
-        Object vehicle2 = new Object();
         try {
-            parkingLotSystem.parkingAttendant(vehicle);
-            parkingLotSystem.parkingAttendant(vehicle2);
             parkingLotSystem.findMyCar(vehicle);
-            parkingLotSystem.findMyCar(vehicle2);
         } catch (ParkingLotException e) {
             Assert.assertEquals("Car is not Parked", e.getMessage());
         }
@@ -156,10 +151,9 @@ public class ParkingLotTest {
         try {
             parkingLotSystem.parkingAttendant(vehicle2);
             parkingLotSystem.parkingAttendant(vehicle);
-        } catch (ParkingLotException e) {
-        }
+        } catch (ParkingLotException e) { }
         String parkingTimeOne = parkingLotSystem.getParkingTime(vehicle);
-        String parkingTimeTwo = parkingLotSystem.getParkingTime(vehicle);
+        String parkingTimeTwo = parkingLotSystem.getParkingTime(vehicle2);
         Assert.assertEquals(time, parkingTimeOne);
         Assert.assertEquals(time, parkingTimeTwo);
     }

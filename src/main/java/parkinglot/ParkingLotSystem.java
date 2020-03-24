@@ -2,19 +2,13 @@ package parkinglot;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static java.time.ZonedDateTime.now;
+import java.util.*;
 
 //Welcome to parking lot system
 public class ParkingLotSystem {
     private int actualCapacity;
-    private List vehicles;
-    private Map parkingTime;
-    private Object vehicle;
+
+    private LinkedHashMap parkingTime;
 
     private List<ParkingLotObserver> observers;
     LocalDateTime myDateObj = LocalDateTime.now();
@@ -22,10 +16,9 @@ public class ParkingLotSystem {
     String time = myDateObj.format(myFormatObj);
 
     public ParkingLotSystem(int capacity) {
-        parkingTime=new HashMap<Object,String>();
-        observers = new ArrayList<>();
-        vehicles = new ArrayList();
-        actualCapacity = capacity;
+        this.parkingTime = new LinkedHashMap();
+        this.observers = new ArrayList<>();
+        this.actualCapacity = capacity;
     }
 
     public void registerParkingLotObserver(ParkingLotObserver observer) {
@@ -37,22 +30,19 @@ public class ParkingLotSystem {
     }
 
     public void park(Object vehicle) throws ParkingLotException {
-
-
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
-        if (this.vehicles.size() == this.actualCapacity) {
+        if (this.parkingTime.size() == this.actualCapacity) {
             for (ParkingLotObserver observers : observers) {
                 observers.capacityIsFull();
             }
             throw new ParkingLotException("Parking Lot is full");
         }
-        this.parkingTime.put(vehicle,time);
-        this.vehicles.add(vehicle);
+        this.parkingTime.put(vehicle, time);
     }
 
     public boolean isVehicleParked(Object vehicle) {
-        if (this.vehicles.contains(vehicle))
+        if (this.parkingTime.containsKey(vehicle))
             return true;
         return false;
     }
@@ -60,8 +50,8 @@ public class ParkingLotSystem {
     public boolean unPark(Object vehicle) {
         if (vehicle == null)
             return false;
-        if (this.vehicles.contains(vehicle)) {
-            this.vehicles.remove(vehicle);
+        if (this.parkingTime.containsKey(vehicle)) {
+            this.parkingTime.remove(vehicle);
             for (ParkingLotObserver observers : observers) {
                 observers.capacityIsAvailable();
             }
@@ -75,13 +65,15 @@ public class ParkingLotSystem {
     }
 
     public int findMyCar(Object vehicle) throws ParkingLotException {
-        if(this.vehicles.contains(vehicle))
-        return this.vehicles.indexOf(vehicle);
+        if (this.parkingTime.containsKey(vehicle)) {
+            Set<Integer> keys = parkingTime.keySet();
+            List<Integer> listKeys = new ArrayList<Integer>(keys);
+            return listKeys.indexOf(vehicle);
+        }
         throw new ParkingLotException("Car is not Parked");
     }
 
     public String getParkingTime(Object vehicle) {
-
         return (String) this.parkingTime.get(vehicle);
     }
 }
