@@ -151,10 +151,31 @@ public class ParkingLotTest {
         try {
             parkingLotSystem.parkingAttendant(vehicle2);
             parkingLotSystem.parkingAttendant(vehicle);
-        } catch (ParkingLotException e) { }
+        } catch (ParkingLotException e) {
+        }
         String parkingTimeOne = parkingLotSystem.getParkingTime(vehicle);
         String parkingTimeTwo = parkingLotSystem.getParkingTime(vehicle2);
         Assert.assertEquals(time, parkingTimeOne);
         Assert.assertEquals(time, parkingTimeTwo);
+    }
+
+    @Test
+    public void givenACar_WhenParked_ShouldBeParkedEvenly() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3);
+        Object vehicle2 = new Object();
+        Object vehicle3 = new Object();
+
+        try {
+            parkingLotSystem.parkingAttendant(vehicle);
+            parkingLotSystem.parkingAttendant(vehicle2);
+            parkingLotSystem.parkingAttendant(vehicle3);
+            int myCar = parkingLotSystem.findMyCar(vehicle);
+            int myCar1 = parkingLotSystem.findMyCar(vehicle2);
+            int myCar2 = parkingLotSystem.findMyCar(vehicle3);
+            Assert.assertEquals(0,myCar);
+            Assert.assertEquals(1,myCar1);
+            Assert.assertEquals(2,myCar2);
+        } catch (ParkingLotException e) {
+        }
     }
 }
