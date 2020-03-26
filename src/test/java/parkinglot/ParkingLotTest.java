@@ -164,7 +164,6 @@ public class ParkingLotTest {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3);
         Object vehicle2 = new Object();
         Object vehicle3 = new Object();
-
         try {
             parkingLotSystem.parkingAttendant(vehicle);
             parkingLotSystem.parkingAttendant(vehicle2);
@@ -172,9 +171,26 @@ public class ParkingLotTest {
             int myCar = parkingLotSystem.findMyCar(vehicle);
             int myCar1 = parkingLotSystem.findMyCar(vehicle2);
             int myCar2 = parkingLotSystem.findMyCar(vehicle3);
-            Assert.assertEquals(0,myCar);
-            Assert.assertEquals(1,myCar1);
-            Assert.assertEquals(2,myCar2);
+            Assert.assertEquals(0, myCar);
+            Assert.assertEquals(1, myCar1);
+            Assert.assertEquals(2, myCar2);
+        } catch (ParkingLotException e) {
+        }
+    }
+
+    @Test
+    public void givenAHandicappedPersonsCar_ShouldBeParkedToTheNearestSpace() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(4);
+        Object vehicle2 = new Object();
+        Object vehicle3 = new Object();
+        Object handicappedPersonsCar = new Object();
+        try {
+            parkingLotSystem.parkingAttendant(vehicle);
+            parkingLotSystem.parkingAttendant(vehicle2);
+            parkingLotSystem.parkingAttendant(vehicle3);
+            parkingLotSystem.parkingAttendant(handicappedPersonsCar);
+            int myCar = parkingLotSystem.findMyCar(handicappedPersonsCar);
+            Assert.assertEquals(3, myCar);
         } catch (ParkingLotException e) {
         }
     }
