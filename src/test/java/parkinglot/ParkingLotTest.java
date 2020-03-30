@@ -67,6 +67,18 @@ public class ParkingLotTest {
     }
 
     @Test
+    public void givenParkingLotVacancy_WhenNotFull_ShouldInformTheOwner() {
+        ParkingLotOwner owner = new ParkingLotOwner();
+        parkingLotSystem.registerParkingLotObserver(owner);
+        try {
+            parkingLotSystem.parkingAttendant(vehicle);
+        } catch (ParkingLotException e) {
+        }
+        boolean capacityFull = owner.isCapacityFull();
+        Assert.assertFalse(capacityFull);
+    }
+
+    @Test
     public void givenCapacityAs2_ShouldBeAbleToPark2Vehicles() {
         Object vehicle2 = new Object();
         parkingLotSystem.setCapacity(2);
@@ -87,11 +99,37 @@ public class ParkingLotTest {
         try {
             parkingLotSystem.parkingAttendant(vehicle);
             parkingLotSystem.parkingAttendant(new Object());
-
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = airportSecurity.isCapacityFull();
         Assert.assertTrue(capacityFull);
+    }
+
+    @Test
+    public void givenParkingLotSpace_WhenNotFull_ShouldReturnFalse() {
+        AirportSecurity airportSecurity = new AirportSecurity();
+        parkingLotSystem.registerParkingLotObserver(airportSecurity);
+        try {
+            parkingLotSystem.parkingAttendant(vehicle);
+        } catch (ParkingLotException e) {
+        }
+        boolean capacityFull = airportSecurity.isCapacityFull();
+        Assert.assertFalse(capacityFull);
+    }
+
+    @Test
+    public void givenParkingLotSpace_WhenAvailable_ShouldInformSecurity() {
+        Object vehicle2 = new Object();
+        AirportSecurity security = new AirportSecurity();
+        parkingLotSystem.registerParkingLotObserver(security);
+        try {
+            parkingLotSystem.park(vehicle);
+            parkingLotSystem.park(vehicle2);
+        } catch (ParkingLotException e) {
+        }
+        parkingLotSystem.unPark(vehicle);
+        boolean capacityFull = security.isCapacityFull();
+        Assert.assertFalse(capacityFull);
     }
 
     @Test
@@ -108,6 +146,7 @@ public class ParkingLotTest {
         boolean capacityFull = owner.isCapacityFull();
         Assert.assertFalse(capacityFull);
     }
+
 
     @Test
     public void givenCar_ParkingAttendantShouldParkTheCar() {

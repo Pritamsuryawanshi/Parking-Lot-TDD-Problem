@@ -30,17 +30,17 @@ public class ParkingLotSystem {
     public void park(Object vehicle) throws ParkingLotException {
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
-        if (this.vehicles.size() == this.actualCapacity) {
+        if (vehicles.size() == actualCapacity) {
             for (ParkingLotObserver observers : observers) {
                 observers.capacityIsFull();
             }
             throw new ParkingLotException("Parking Lot is full");
         }
-        this.vehicles.put(vehicle, time);
+        vehicles.put(vehicle, time);
     }
 
     public boolean isVehicleParked(Object vehicle) {
-        if (this.vehicles.containsKey(vehicle))
+        if (vehicles.containsKey(vehicle))
             return true;
         return false;
     }
@@ -48,8 +48,8 @@ public class ParkingLotSystem {
     public boolean unPark(Object vehicle) {
         if (vehicle == null)
             return false;
-        if (this.vehicles.containsKey(vehicle)) {
-            this.vehicles.remove(vehicle);
+        if (vehicles.containsKey(vehicle)) {
+            vehicles.remove(vehicle);
             for (ParkingLotObserver observers : observers) {
                 observers.capacityIsAvailable();
             }
@@ -59,12 +59,12 @@ public class ParkingLotSystem {
     }
 
     public void parkingAttendant(Object vehicle) throws ParkingLotException {
-        this.park(vehicle);
+        park(vehicle);
     }
 
     public int findMyCar(Object vehicle) throws ParkingLotException {
-        if (this.vehicles.containsKey(vehicle)) {
-            Set<Integer> keys = this.vehicles.keySet();
+        if (vehicles.containsKey(vehicle)) {
+            Set<Integer> keys = vehicles.keySet();
             List<Integer> listKeys = new ArrayList<>(keys);
             return listKeys.indexOf(vehicle);
         }
@@ -72,7 +72,6 @@ public class ParkingLotSystem {
     }
 
     public String getParkingTime(Object vehicle) {
-        return (String) this.vehicles.get(vehicle);
-
+        return (String) vehicles.get(vehicle);
     }
 }
