@@ -17,10 +17,8 @@ public class ParkingLot {
     }
 
     private void setNull() {
-        if (vehicles.isEmpty()) {
-            IntStream.range(0, actualCapacity)
-                    .forEach(slot -> vehicles.add(null));
-        }
+        IntStream.range(0, actualCapacity)
+                .forEach(slot -> vehicles.add(null));
     }
 
     public void registerParkingLotObserver(ParkingLotObserver observer) {
@@ -82,18 +80,6 @@ public class ParkingLot {
         throw new ParkingLotException("Lot is full");
     }
 
-    /* public boolean isTimeSet(){
-         ArrayList<Integer> filledSlots = new ArrayList();
-         IntStream.range(0, actualCapacity)
-                 .filter(index -> vehicles.get(index) != null)
-                 .forEach(index -> filledSlots.add(index));
-         for (int i = 0; i < filledSlots.size(); i++) {
-             if (vehicles.get(filledSlots.get(i)).time != null)
-                 return true;
-         }
-         return false;
-     }
- */
     public boolean isTimeSet() {
         ArrayList<Integer> filledSlots = new ArrayList();
         IntStream.range(0, vehicles.size())
@@ -104,6 +90,8 @@ public class ParkingLot {
                 return false;
             }
         }
+        if (filledSlots.isEmpty())
+            return false;
         return true;
     }
 

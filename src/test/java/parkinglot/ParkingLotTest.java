@@ -226,11 +226,11 @@ public class ParkingLotTest {
         }
     }
 
- /*   @Test
+    @Test
     public void givenCarNotParked_AndTimeIsNotSte_ShouldReturnFalse() {
         boolean timeSet = parkingLot.isTimeSet();
         Assert.assertFalse(timeSet);
-    }*/
+    }
 
     @Test
     public void givenACar_WhenParked_ShouldBeParkedEvenly() {
