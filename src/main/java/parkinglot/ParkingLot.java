@@ -4,12 +4,12 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 //Welcome to parking lot system
-public class ParkingLotSystem {
+public class ParkingLot {
     private int actualCapacity;
     private List<ParkingSlots> vehicles;
     Informer informer;
 
-    public ParkingLotSystem(int capacity) {
+    public ParkingLot(int capacity) {
         informer = new Informer();
         this.actualCapacity = capacity;
         this.vehicles = new ArrayList<>();
@@ -61,15 +61,15 @@ public class ParkingLotSystem {
     }
 
     private int getAvailableSlots(DriverType type) throws ParkingLotException {
-        ArrayList<Integer> availableSlot = new ArrayList();
+        ArrayList<Integer> availableSlots = new ArrayList();
         IntStream.range(0, actualCapacity)
                 .filter(index -> vehicles.get(index) == null)
-                .forEach(index -> availableSlot.add(index));
-        if (availableSlot.size() == 1) {
+                .forEach(index -> availableSlots.add(index));
+        if (availableSlots.size() == 1) {
             informer.notifyFull();
-            return availableSlot.get(0);
+            return availableSlots.get(0);
         }
-        return decideSlot(availableSlot, type);
+        return decideSlot(availableSlots, type);
     }
 
     private int decideSlot(ArrayList<Integer> availableSlot, DriverType type) throws ParkingLotException {
@@ -80,6 +80,31 @@ public class ParkingLotSystem {
             return availableSlot.get(0) + 1;
         }
         throw new ParkingLotException("Lot is full");
+    }
+
+    /* public boolean isTimeSet(){
+         ArrayList<Integer> filledSlots = new ArrayList();
+         IntStream.range(0, actualCapacity)
+                 .filter(index -> vehicles.get(index) != null)
+                 .forEach(index -> filledSlots.add(index));
+         for (int i = 0; i < filledSlots.size(); i++) {
+             if (vehicles.get(filledSlots.get(i)).time != null)
+                 return true;
+         }
+         return false;
+     }
+ */
+    public boolean isTimeSet() {
+        ArrayList<Integer> filledSlots = new ArrayList();
+        IntStream.range(0, vehicles.size())
+                .filter(index -> vehicles.get(index) != null)
+                .forEach(index -> filledSlots.add(index));
+        for (int i = 0; i < filledSlots.size(); i++) {
+            if (vehicles.get(filledSlots.get(i)).time == null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public int findMyCar(Object vehicle) throws ParkingLotException {
