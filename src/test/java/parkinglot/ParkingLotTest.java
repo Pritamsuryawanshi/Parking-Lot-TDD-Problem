@@ -8,12 +8,20 @@ public class ParkingLotTest {
     Object vehicle = null;
     ParkingLot parkingLot = null;
     Informer informer = null;
+    ParkingLotsSystem parkingLotsSystem;
+    ParkingLotOwner owner;
+    AirportSecurity airPortSecurity;
+
 
     @Before
     public void setUp() throws Exception {
         vehicle = new Object();
         parkingLot = new ParkingLot(2);
         informer = new Informer();
+        parkingLotsSystem = new ParkingLotsSystem();
+        parkingLotsSystem.addLot(parkingLot);
+        owner = new ParkingLotOwner();
+        airPortSecurity = new AirportSecurity();
     }
 
     @Test
@@ -253,12 +261,11 @@ public class ParkingLotTest {
 
     @Test
     public void givenAHandicappedPersonsCar_ShouldBeParkedToTheNearestSpace() {
-        ParkingLot parkingLot = new ParkingLot(4);
+        ParkingLot parkingLot = new ParkingLot(1);
         Object vehicle2 = new Object();
         Object vehicle3 = new Object();
         Object handicappedPersonsCar = new Object();
         Object handicappedPersonsCar2 = new Object();
-
         try {
             parkingLot.parkingAttendant(vehicle, DriverType.NORMAL);
             parkingLot.parkingAttendant(vehicle2, DriverType.NORMAL);
@@ -270,6 +277,31 @@ public class ParkingLotTest {
             Assert.assertEquals(0, myCar);
             Assert.assertEquals(2, myCar2);
         } catch (ParkingLotException e) {
+            Assert.assertEquals("Lot is full", e.getMessage());
         }
+    }
+
+    //multiple lots
+
+    //AirPort
+    @Test
+    public void givenParkingLot_WhenLotIsFull_ShouldInfromAirPortSecurityStaff() {
+        parkingLotsSystem.registerParkingLots(airPortSecurity);
+        Object vehicle2 = new Object();
+        Object vehicle3 = new Object();
+        try {
+            parkingLot.parkingAttendant(vehicle, DriverType.NORMAL);
+            parkingLot.parkingAttendant(vehicle2, DriverType.NORMAL);
+            boolean isCapacityFull = airPortSecurity.isCapacityFull();
+            Assert.assertTrue(isCapacityFull);
+        } catch (ParkingLotException e) {
+        }
+    }
+
+    @Test
+    public void givenVehicle_WhenParkedUsingParkingSystem_ShouldReturnTrue() throws ParkingLotException {
+        parkingLotsSystem.park(vehicle, DriverType.NORMAL);
+        boolean vehicleParked = parkingLot.isVehicleParked(vehicle);
+        Assert.assertTrue(vehicleParked);
     }
 }

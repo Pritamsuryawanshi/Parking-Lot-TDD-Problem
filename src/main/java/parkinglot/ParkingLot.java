@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 //Welcome to parking lot system
 public class ParkingLot {
     private int actualCapacity;
-    private List<ParkingSlots> vehicles;
+    static List<ParkingSlots> vehicles;
     Informer informer;
 
     public ParkingLot(int capacity) {
@@ -29,11 +29,12 @@ public class ParkingLot {
         this.actualCapacity = capacity;
     }
 
-    public void park(Object vehicle, int availableSlot, DriverType type) throws ParkingLotException {
+    public boolean park(Object vehicle, int availableSlot, DriverType type) throws ParkingLotException {
         ParkingSlots parkingSlots = new ParkingSlots(vehicle,type);
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
         vehicles.set(availableSlot, parkingSlots);
+        return true;
     }
 
     public boolean isVehicleParked(Object vehicle) {
@@ -51,9 +52,9 @@ public class ParkingLot {
         throw new ParkingLotException("Vehicle is not parked");
     }
 
-    public void parkingAttendant(Object vehicle, DriverType type) throws ParkingLotException {
+    public boolean parkingAttendant(Object vehicle, DriverType type) throws ParkingLotException {
         int availableSlot = getAvailableSlots(type);
-        park(vehicle, availableSlot,type);
+        return park(vehicle, availableSlot,type);
     }
 
     private int getAvailableSlots(DriverType type) throws ParkingLotException {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Informer {
-    public List<ParkingLotObserver> observers ;
+    static List<ParkingLotObserver> observers ;
 
     public Informer() {
        observers = new ArrayList<>();
@@ -12,12 +12,15 @@ public class Informer {
 
     public void registerParkingLotObserver(ParkingLotObserver observer) {
         observers.add(observer);
+        System.out.println("list in rgsiter"+observers);
     }
 
     public void notifyFull() {
+        System.out.println("list in full"+observers);
         for (ParkingLotObserver observers : observers) {
             observers.capacityIsFull();
         }
+
     }
 
     public void notifyAvailable() {
