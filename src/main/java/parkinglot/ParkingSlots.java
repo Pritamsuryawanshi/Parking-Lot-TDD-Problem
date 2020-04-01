@@ -5,10 +5,16 @@ import java.time.LocalDateTime;
 public class ParkingSlots {
     public LocalDateTime time;
     Object vehicle;
+    DriverType type;
 
-    public ParkingSlots(Object vehicle) {
+    public ParkingSlots(Object vehicle, DriverType type) {
         this.vehicle = vehicle;
         this.time = LocalDateTime.now();
+        this.type=type;
+    }
+
+    public ParkingSlots(Object vehicle) {
+        this.vehicle=vehicle;
     }
 
     @Override

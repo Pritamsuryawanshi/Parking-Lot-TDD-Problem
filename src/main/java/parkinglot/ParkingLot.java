@@ -29,8 +29,8 @@ public class ParkingLot {
         this.actualCapacity = capacity;
     }
 
-    public void park(Object vehicle, int availableSlot) throws ParkingLotException {
-        ParkingSlots parkingSlots = new ParkingSlots(vehicle);
+    public void park(Object vehicle, int availableSlot, DriverType type) throws ParkingLotException {
+        ParkingSlots parkingSlots = new ParkingSlots(vehicle,type);
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
         vehicles.set(availableSlot, parkingSlots);
@@ -55,7 +55,7 @@ public class ParkingLot {
 
     public void parkingAttendant(Object vehicle, DriverType type) throws ParkingLotException {
         int availableSlot = getAvailableSlots(type);
-        park(vehicle, availableSlot);
+        park(vehicle, availableSlot,type);
     }
 
     private int getAvailableSlots(DriverType type) throws ParkingLotException {
@@ -85,13 +85,13 @@ public class ParkingLot {
         IntStream.range(0, vehicles.size())
                 .filter(index -> vehicles.get(index) != null)
                 .forEach(index -> filledSlots.add(index));
+        if (filledSlots.isEmpty())
+            return false;
         for (int i = 0; i < filledSlots.size(); i++) {
             if (vehicles.get(filledSlots.get(i)).time == null) {
                 return false;
             }
         }
-        if (filledSlots.isEmpty())
-            return false;
         return true;
     }
 
