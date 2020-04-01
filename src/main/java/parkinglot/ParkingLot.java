@@ -38,9 +38,7 @@ public class ParkingLot {
 
     public boolean isVehicleParked(Object vehicle) {
         ParkingSlots parkingSlot = new ParkingSlots(vehicle);
-        if (this.vehicles.contains(parkingSlot))
-            return true;
-        return false;
+        return vehicles.contains(parkingSlot);
     }
 
     public boolean unPark(Object vehicle) throws ParkingLotException {

@@ -24,12 +24,4 @@ public class ParkingSlots {
         ParkingSlots that = (ParkingSlots) o;
         return vehicle.equals(that.vehicle);
     }
-
-    @Override
-    public String toString() {
-        return "ParkingSlots{" +
-                "time=" + time +
-                ", vehicle=" + vehicle +
-                '}';
-    }
 }
