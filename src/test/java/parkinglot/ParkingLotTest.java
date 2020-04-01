@@ -283,7 +283,6 @@ public class ParkingLotTest {
 
     //multiple lots
 
-    //AirPort
     @Test
     public void givenParkingLot_WhenLotIsFull_ShouldInfromAirPortSecurityStaff() {
         parkingLotsSystem.registerParkingLots(airPortSecurity);

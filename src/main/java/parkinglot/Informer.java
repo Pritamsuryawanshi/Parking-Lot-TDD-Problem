@@ -12,11 +12,9 @@ public class Informer {
 
     public void registerParkingLotObserver(ParkingLotObserver observer) {
         observers.add(observer);
-        System.out.println("list in rgsiter"+observers);
     }
 
     public void notifyFull() {
-        System.out.println("list in full"+observers);
         for (ParkingLotObserver observers : observers) {
             observers.capacityIsFull();
         }
