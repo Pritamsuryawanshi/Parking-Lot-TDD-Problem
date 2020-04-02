@@ -31,7 +31,7 @@ public class ParkingLot {
         this.actualCapacity = capacity;
     }
 
-    public boolean park(Object vehicle, int availableSlot, DriverType type) throws ParkingLotException {
+    public boolean park(Object vehicle, int availableSlot, VehicleType type) throws ParkingLotException {
         ParkingSlots parkingSlots = new ParkingSlots(vehicle, type);
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
@@ -54,13 +54,13 @@ public class ParkingLot {
         throw new ParkingLotException("Vehicle is not parked");
     }
 
-    public boolean parkingAttendant(Object vehicle, DriverType type) throws ParkingLotException {
+    public boolean parkingAttendant(Object vehicle, VehicleType type) throws ParkingLotException {
         ArrayList<Integer> availableSlot = getAvailableSlots(type);
         int spot = parkingRules.decideParkingSpot(type, availableSlot);
         return park(vehicle, spot, type);
     }
 
-    private ArrayList<Integer> getAvailableSlots(DriverType type) throws ParkingLotException {
+    private ArrayList<Integer> getAvailableSlots(VehicleType type) throws ParkingLotException {
         ArrayList<Integer> availableSlots = new ArrayList();
         IntStream.range(0, actualCapacity)
                 .filter(index -> vehicles.get(index) == null)
