@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 public class ParkingSlots {
     public LocalDateTime time;
     Object vehicle;
-    DriverType type;
+    VehicleType type;
 
-    public ParkingSlots(Object vehicle, DriverType type) {
+    public ParkingSlots(Object vehicle, VehicleType type) {
         this.vehicle = vehicle;
         this.time = LocalDateTime.now();
         this.type=type;

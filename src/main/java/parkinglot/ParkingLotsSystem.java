@@ -23,7 +23,7 @@ public class ParkingLotsSystem {
         informer.registerParkingLotObserver(observer);
     }
 
-    public boolean park(Object vehicle, DriverType type) throws ParkingLotException {
+    public boolean park(Object vehicle, VehicleType type) throws ParkingLotException {
         return parkingLot.parkingAttendant(vehicle,type);
     }
 }
