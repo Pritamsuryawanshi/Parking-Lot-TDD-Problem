@@ -31,8 +31,8 @@ public class ParkingLot {
         this.actualCapacity = capacity;
     }
 
-    public boolean park(Object vehicle, int availableSlot, VehicleType type) throws ParkingLotException {
-        ParkingSlots parkingSlots = new ParkingSlots(vehicle, type);
+    public boolean park(Object vehicle, int availableSlot, VehicleType type, String colour) throws ParkingLotException {
+        ParkingSlots parkingSlots = new ParkingSlots(vehicle, type,colour);
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
         vehicles.set(availableSlot, parkingSlots);
@@ -54,10 +54,10 @@ public class ParkingLot {
         throw new ParkingLotException("Vehicle is not parked");
     }
 
-    public boolean parkingAttendant(Object vehicle, VehicleType type) throws ParkingLotException {
+    public boolean parkingAttendant(Object vehicle, VehicleType type, String colour) throws ParkingLotException {
         ArrayList<Integer> availableSlot = getAvailableSlots(type);
         int spot = parkingRules.decideParkingSpot(type, availableSlot);
-        return park(vehicle, spot, type);
+        return park(vehicle, spot, type, colour);
     }
 
     private ArrayList<Integer> getAvailableSlots(VehicleType type) throws ParkingLotException {
@@ -93,5 +93,14 @@ public class ParkingLot {
             return vehicles.indexOf(parkingSlots);
         }
         throw new ParkingLotException("Car is not Parked");
+    }
+
+    public int findCarByColour(String colour) {
+        ArrayList<Integer> carsMatchingColour = new ArrayList();
+        IntStream.range(0, vehicles.size())
+                .filter(index -> vehicles.get(index) != null)
+                .filter(index -> vehicles.get(index).colour == colour)
+                 .forEach(index -> carsMatchingColour.add(index));
+        return carsMatchingColour.get(0);
     }
 }

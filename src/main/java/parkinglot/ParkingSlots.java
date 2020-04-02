@@ -6,8 +6,10 @@ public class ParkingSlots {
     public LocalDateTime time;
     Object vehicle;
     VehicleType type;
+    String colour;
 
-    public ParkingSlots(Object vehicle, VehicleType type) {
+    public ParkingSlots(Object vehicle, VehicleType type, String colour) {
+        this.colour=colour;
         this.vehicle = vehicle;
         this.time = LocalDateTime.now();
         this.type=type;
