@@ -227,7 +227,7 @@ public class ParkingLotTest {
         try {
             parkingLot.parkingAttendant(vehicle, DriverType.NORMAL);
             parkingLot.parkingAttendant(new Object(), DriverType.NORMAL);
-            boolean timeSet = parkingLot.isTimeSet(vehicle);
+            boolean timeSet = parkingLot.isTimeSet();
             Assert.assertTrue(timeSet);
         } catch (ParkingLotException e) {
         }
@@ -235,7 +235,7 @@ public class ParkingLotTest {
 
     @Test
     public void givenCarNotParked_AndTimeIsNotSte_ShouldReturnFalse() {
-        boolean timeSet = parkingLot.isTimeSet(vehicle);
+        boolean timeSet = parkingLot.isTimeSet();
         Assert.assertFalse(timeSet);
     }
 
