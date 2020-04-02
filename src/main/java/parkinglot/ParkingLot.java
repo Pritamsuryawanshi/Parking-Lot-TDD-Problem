@@ -6,10 +6,12 @@ import java.util.stream.IntStream;
 //Welcome to parking lot system
 public class ParkingLot {
     private int actualCapacity;
-    static List<ParkingSlots> vehicles;
+    static List<ParkingSlots> vehicles = new ArrayList<>();
     Informer informer;
+    ParkingRules parkingRules;
 
     public ParkingLot(int capacity) {
+        parkingRules = new ParkingRules();
         informer = new Informer();
         this.actualCapacity = capacity;
         this.vehicles = new ArrayList<>();
@@ -30,7 +32,7 @@ public class ParkingLot {
     }
 
     public boolean park(Object vehicle, int availableSlot, DriverType type) throws ParkingLotException {
-        ParkingSlots parkingSlots = new ParkingSlots(vehicle,type);
+        ParkingSlots parkingSlots = new ParkingSlots(vehicle, type);
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
         vehicles.set(availableSlot, parkingSlots);
@@ -53,33 +55,21 @@ public class ParkingLot {
     }
 
     public boolean parkingAttendant(Object vehicle, DriverType type) throws ParkingLotException {
-        int availableSlot = getAvailableSlots(type);
-        return park(vehicle, availableSlot,type);
+        ArrayList<Integer> availableSlot = getAvailableSlots(type);
+        int spot = parkingRules.decideParkingSpot(type, availableSlot);
+        return park(vehicle, spot, type);
     }
 
-    private int getAvailableSlots(DriverType type) throws ParkingLotException {
+    private ArrayList<Integer> getAvailableSlots(DriverType type) throws ParkingLotException {
         ArrayList<Integer> availableSlots = new ArrayList();
         IntStream.range(0, actualCapacity)
                 .filter(index -> vehicles.get(index) == null)
                 .forEach(index -> availableSlots.add(index));
-        if (availableSlots.size() == 1) {
-            informer.notifyFull();
-            return availableSlots.get(0);
-        }
-        return decideSlot(availableSlots, type);
+        return availableSlots;
     }
 
-    private int decideSlot(ArrayList<Integer> availableSlot, DriverType type) throws ParkingLotException {
-        if (availableSlot.size() != 0 && type.equals(DriverType.HANDICAP)) {
-            return availableSlot.get(0);
-        }
-        if (availableSlot.size() != 0 && type.equals(DriverType.NORMAL)) {
-            return availableSlot.get(0) + 1;
-        }
-        throw new ParkingLotException("Lot is full");
-    }
 
-    public boolean isTimeSet() {
+    public boolean isTimeSet(Object vehicle) {
         ArrayList<Integer> filledSlots = new ArrayList();
         IntStream.range(0, vehicles.size())
                 .filter(index -> vehicles.get(index) != null)

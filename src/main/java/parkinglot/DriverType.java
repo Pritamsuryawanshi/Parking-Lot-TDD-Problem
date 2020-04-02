@@ -1,5 +1,5 @@
 package parkinglot;
 
 public enum DriverType {
-    NORMAL,HANDICAP;
+    NORMAL,HANDICAP, LARGE_VEHICLE;
 }

@@ -18,10 +18,10 @@ public class ParkingSlots {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ParkingSlots that = (ParkingSlots) o;
-        return vehicle.equals(that.vehicle);
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        ParkingSlots parkingSlots = (ParkingSlots) object;
+        return vehicle.equals(parkingSlots.vehicle);
     }
 }
