@@ -26,20 +26,13 @@ public class ParkingLotTest {
     @Test
     public void givenAVehicle_WhenParked_ShouldReturnTrue() {
         ParkingLot parkingLot = new ParkingLot(5);
-        Object vehicle2 = new Object();
-        Object vehicle3 = new Object();
-        Object vehicle4 = new Object();
-        Object vehicle5 = new Object();
+
         try {
             parkingLot.parkingAttendant(vehicle, DriverType.NORMAL);
-            parkingLot.parkingAttendant(vehicle2, DriverType.LARGE_VEHICLE);
-            parkingLot.parkingAttendant(vehicle3, DriverType.NORMAL);
-            parkingLot.parkingAttendant(vehicle4, DriverType.NORMAL);
-            parkingLot.parkingAttendant(vehicle5, DriverType.NORMAL);
             boolean isParked = parkingLot.isVehicleParked(vehicle);
             Assert.assertTrue(isParked);
         } catch (ParkingLotException e) {
-            e.printStackTrace();
+            Assert.assertEquals("No spaces for large vehicle", e.getMessage());
         }
     }
 
@@ -306,5 +299,22 @@ public class ParkingLotTest {
         parkingLotsSystem.park(vehicle, DriverType.NORMAL);
         boolean vehicleParked = parkingLot.isVehicleParked(vehicle);
         Assert.assertTrue(vehicleParked);
+    }
+
+    @Test
+    public void givenALargeVehicle_WhenParked_ShouldReturnTrue() {
+        ParkingLot parkingLot = new ParkingLot(5);
+        Object vehicle2 = new Object();
+        Object vehicleLarge = new Object();
+        Object vehicle3 = new Object();
+        try {
+            parkingLot.parkingAttendant(vehicle, DriverType.NORMAL);
+            parkingLot.parkingAttendant(vehicle2, DriverType.LARGE_VEHICLE);
+            parkingLot.parkingAttendant(vehicle3, DriverType.NORMAL);
+            parkingLot.parkingAttendant(vehicleLarge, DriverType.LARGE_VEHICLE);
+            boolean isParked = parkingLot.isVehicleParked(vehicle3);
+            Assert.assertTrue(isParked);
+        } catch (ParkingLotException e) {
+        }
     }
 }

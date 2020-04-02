@@ -7,35 +7,27 @@ public class ParkingRules {
     Informer informer = new Informer();
 
     public int decideParkingSpot(DriverType type, ArrayList<Integer> availableSpots) throws ParkingLotException {
-        if (availableSpots.size() == 1) {
-            informer.notifyFull();
-            return availableSpots.get(0);
-        }
         if (type.equals(DriverType.HANDICAP))
             return handicapParkingRules(availableSpots);
-        if (type.equals(DriverType.LARGE_VEHICLE)) {
+        if (type.equals(DriverType.LARGE_VEHICLE) && availableSpots.size()>2) {
             return largeVehicleParkingRules(availableSpots);
         }
-        return NormalDriverStrategy(availableSpots);
+        return NormalParkingRules(availableSpots);
     }
 
-
-    public int NormalDriverStrategy(ArrayList<Integer> availableSlot) throws ParkingLotException {
+    public int NormalParkingRules(ArrayList<Integer> availableSlot) throws ParkingLotException {
         if (availableSlot.size() != 0)
             return availableSlot.get(availableSlot.size() - 1);
         throw new ParkingLotException("Lot is full");
     }
 
     public int largeVehicleParkingRules(ArrayList<Integer> availableSlot) throws ParkingLotException {
-        if (availableSlot.size() < 3) {
-            throw new ParkingLotException("No space or large vehicle");
-        }
-        for (int i = 1; i < availableSlot.size(); i++) {
+        for (int i = 1; i < availableSlot.size() - 1; i++) {
             if (availableSlot.get(i - 1) == availableSlot.get(i) - 1 && availableSlot.get(i + 1) == availableSlot.get(i) + 1) {
                 return availableSlot.get(i);
             }
         }
-        throw new ParkingLotException("No space or large vehicle");
+        return availableSlot.get(0);
     }
 
     public int handicapParkingRules(ArrayList<Integer> availableSlot) throws ParkingLotException {

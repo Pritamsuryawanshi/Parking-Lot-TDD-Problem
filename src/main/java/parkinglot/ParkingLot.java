@@ -65,11 +65,12 @@ public class ParkingLot {
         IntStream.range(0, actualCapacity)
                 .filter(index -> vehicles.get(index) == null)
                 .forEach(index -> availableSlots.add(index));
+        if (availableSlots.size()==1)
+            informer.notifyFull();
         return availableSlots;
     }
 
-
-    public boolean isTimeSet(Object vehicle) {
+    public boolean isTimeSet(Object) {
         ArrayList<Integer> filledSlots = new ArrayList();
         IntStream.range(0, vehicles.size())
                 .filter(index -> vehicles.get(index) != null)
