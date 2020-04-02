@@ -24,6 +24,6 @@ public class ParkingLotsSystem {
     }
 
     public boolean park(Object vehicle, VehicleType type) throws ParkingLotException {
-        return parkingLot.parkingAttendant(vehicle,type, "WHITE");
+        return parkingLot.parkingAttendant(vehicle,type, "WHITE", "WHITE", "MH 16 244");
     }
 }

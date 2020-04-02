@@ -7,8 +7,12 @@ public class ParkingSlots {
     Object vehicle;
     VehicleType type;
     String colour;
+    String brand;
+    String plateNumber;
 
-    public ParkingSlots(Object vehicle, VehicleType type, String colour) {
+    public ParkingSlots(Object vehicle, VehicleType type, String brand, String colour, String plateNumber) {
+        this.plateNumber=plateNumber;
+        this.brand=brand;
         this.colour=colour;
         this.vehicle = vehicle;
         this.time = LocalDateTime.now();

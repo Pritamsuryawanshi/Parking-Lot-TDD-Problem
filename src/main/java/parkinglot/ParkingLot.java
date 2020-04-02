@@ -31,8 +31,8 @@ public class ParkingLot {
         this.actualCapacity = capacity;
     }
 
-    public boolean park(Object vehicle, int availableSlot, VehicleType type, String colour) throws ParkingLotException {
-        ParkingSlots parkingSlots = new ParkingSlots(vehicle, type,colour);
+    public boolean park(Object vehicle, int availableSlot, VehicleType type, String brand, String colour, String plateNumber) throws ParkingLotException {
+        ParkingSlots parkingSlots = new ParkingSlots(vehicle, type, colour, brand, plateNumber);
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
         vehicles.set(availableSlot, parkingSlots);
@@ -54,10 +54,10 @@ public class ParkingLot {
         throw new ParkingLotException("Vehicle is not parked");
     }
 
-    public boolean parkingAttendant(Object vehicle, VehicleType type, String colour) throws ParkingLotException {
+    public boolean parkingAttendant(Object vehicle, VehicleType type, String brand, String colour, String plateNumber) throws ParkingLotException {
         ArrayList<Integer> availableSlot = getAvailableSlots(type);
         int spot = parkingRules.decideParkingSpot(type, availableSlot);
-        return park(vehicle, spot, type, colour);
+        return park(vehicle, spot, type, colour, brand, plateNumber);
     }
 
     private ArrayList<Integer> getAvailableSlots(VehicleType type) throws ParkingLotException {
@@ -100,7 +100,17 @@ public class ParkingLot {
         IntStream.range(0, vehicles.size())
                 .filter(index -> vehicles.get(index) != null)
                 .filter(index -> vehicles.get(index).colour == colour)
-                 .forEach(index -> carsMatchingColour.add(index));
+                .forEach(index -> carsMatchingColour.add(index));
         return carsMatchingColour.get(0);
+    }
+
+    public ParkingSlots findCarByBrand(String brand, String colour) {
+        ArrayList<ParkingSlots> carsMatchingBrand = new ArrayList();
+        IntStream.range(0, vehicles.size())
+                .filter(index -> vehicles.get(index) != null)
+                .filter(index -> vehicles.get(index).brand == brand)
+                .filter(index -> vehicles.get(index).colour == colour)
+                .forEach(index -> carsMatchingBrand.add(vehicles.get(index)));
+        return carsMatchingBrand.get(0);
     }
 }
