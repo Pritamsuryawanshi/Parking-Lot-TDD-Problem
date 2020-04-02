@@ -1,5 +1,4 @@
 package parkinglot;
-
 import java.time.LocalDateTime;
 
 public class ParkingSlots {

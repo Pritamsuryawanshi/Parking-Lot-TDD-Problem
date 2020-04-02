@@ -356,7 +356,7 @@ public class ParkingLotTest {
             Assert.assertNotEquals("WHITE", parkingSlots.colour);
             Assert.assertEquals("MH 16 244", parkingSlots.plateNumber);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("No spaces s for large vehicle", e.getMessage());
+            Assert.assertEquals("No spaces for large vehicle", e.getMessage());
         }
     }
 
@@ -372,6 +372,7 @@ public class ParkingLotTest {
             Assert.assertTrue(parkingSlots.equals(carByBrand));
             Assert.assertFalse(parkingSlots1.equals(carByBrand));
         } catch (ParkingLotException e) {
+            Assert.assertEquals("No spaces for large vehicle", e.getMessage());
         }
     }
 }
