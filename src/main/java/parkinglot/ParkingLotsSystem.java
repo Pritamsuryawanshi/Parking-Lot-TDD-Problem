@@ -12,7 +12,7 @@ public class ParkingLotsSystem {
     public ParkingLotsSystem() {
         informer = new Informer();
         this.parkingLotList = new ArrayList<>();
-        parkingLot=new ParkingLot(2);
+        parkingLot = new ParkingLot(2);
     }
 
     public void addLot(ParkingLot parkingLot) {
@@ -24,6 +24,6 @@ public class ParkingLotsSystem {
     }
 
     public boolean park(Object vehicle, VehicleType type) throws ParkingLotException {
-        return parkingLot.parkingAttendant(vehicle,type, "WHITE", "WHITE", "MH 16 244");
+        return parkingLot.parkingAttendant(vehicle, type, "WHITE", "WHITE", "MH 16 244");
     }
 }

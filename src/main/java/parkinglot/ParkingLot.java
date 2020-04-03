@@ -9,8 +9,10 @@ public class ParkingLot {
     static List<ParkingSlots> vehicles = new ArrayList<>();
     Informer informer;
     ParkingRules parkingRules;
+    ArrayList<Integer> list ;
 
     public ParkingLot(int capacity) {
+        list= new ArrayList<>();
         parkingRules = new ParkingRules();
         informer = new Informer();
         this.actualCapacity = capacity;
@@ -36,6 +38,7 @@ public class ParkingLot {
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
         vehicles.set(availableSlot, parkingSlots);
+        list.add(vehicles.indexOf(parkingSlots));
         return true;
     }
 
@@ -95,22 +98,29 @@ public class ParkingLot {
         throw new ParkingLotException("Car is not Parked");
     }
 
-    public int findCarByColour(String colour) {
+    public ArrayList<Integer> findCarByColour(ArrayList<Integer> list, String colour) {
         ArrayList<Integer> carsMatchingColour = new ArrayList();
-        IntStream.range(0, vehicles.size())
-                .filter(index -> vehicles.get(index) != null)
-                .filter(index -> vehicles.get(index).colour == colour)
-                .forEach(index -> carsMatchingColour.add(index));
-        return carsMatchingColour.get(0);
+        IntStream.range(0, list.size())
+                .filter(index -> vehicles.get(list.get(index)) != null)
+                .filter(index -> vehicles.get(list.get(index)).colour == colour)
+                .forEach(index -> carsMatchingColour.add(list.get(index)));
+        return carsMatchingColour;
     }
 
-    public ParkingSlots findCarByBrand(String brand, String colour) {
-        ArrayList<ParkingSlots> carsMatchingBrand = new ArrayList();
-        IntStream.range(0, vehicles.size())
-                .filter(index -> vehicles.get(index) != null)
-                .filter(index -> vehicles.get(index).brand == brand)
-                .filter(index -> vehicles.get(index).colour == colour)
-                .forEach(index -> carsMatchingBrand.add(vehicles.get(index)));
-        return carsMatchingBrand.get(0);
+    public ArrayList<Integer> findCarByBrand(ArrayList<Integer> carList, String brand) {
+        ArrayList<Integer> carsMatchingBrand = new ArrayList();
+        IntStream.range(0, carList.size())
+                .filter(index -> vehicles.get(carList.get(index)) != null)
+                .filter(index -> vehicles.get(carList.get(index)).brand == brand)
+                .forEach(index -> carsMatchingBrand.add(carList.get(index)));
+        return carsMatchingBrand;
+    }
+
+    public ArrayList<Integer> getVehicleList() {
+        return list;
+    }
+
+    public ParkingSlots getObject(Integer index) {
+        return vehicles.get(index);
     }
 }

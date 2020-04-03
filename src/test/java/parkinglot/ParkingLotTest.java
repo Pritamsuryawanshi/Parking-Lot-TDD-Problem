@@ -4,6 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class ParkingLotTest {
     Object vehicle = null;
     ParkingLot parkingLot = null;
@@ -338,8 +341,10 @@ public class ParkingLotTest {
         try {
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "GREEN", "MH 16 244");
             parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            int spot = parkingLot.findCarByColour("GREEN");
-            Assert.assertEquals(4, spot);
+            ArrayList<Integer> list = parkingLot.getVehicleList();
+            ArrayList<Integer> spot = parkingLot.findCarByColour(list, "GREEN");
+            int location = spot.get(0);
+            Assert.assertEquals(4, location);
         } catch (ParkingLotException e) {
         }
     }
@@ -347,14 +352,18 @@ public class ParkingLotTest {
     @Test
     public void givenAVehicleBrandName_WhenParked_ShouldReturnTrue() {
         ParkingLot parkingLot = new ParkingLot(5);
+        Object vehicle2 = new Object();
         try {
             parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "TOYOTA", "BLUE", "MH 16 244");
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 19 244");
-            ParkingSlots parkingSlots = parkingLot.findCarByBrand("TOYOTA", "BLUE");
-            Assert.assertEquals("TOYOTA", parkingSlots.brand);
-            Assert.assertEquals("BLUE", parkingSlots.colour);
-            Assert.assertNotEquals("WHITE", parkingSlots.colour);
-            Assert.assertEquals("MH 16 244", parkingSlots.plateNumber);
+            ArrayList<Integer> list = parkingLot.getVehicleList();
+            ArrayList<Integer> blue = parkingLot.findCarByColour(list, "BLUE");
+            ArrayList<Integer> toyota = parkingLot.findCarByBrand(blue, "TOYOTA");
+            ParkingSlots object = parkingLot.getObject(toyota.get(0));
+            Assert.assertEquals("TOYOTA", object.brand);
+            Assert.assertEquals("BLUE", object.colour);
+            Assert.assertNotEquals("WHITE", object.colour);
+            Assert.assertEquals("MH 16 244", object.plateNumber);
         } catch (ParkingLotException e) {
             Assert.assertEquals("No spaces for large vehicle", e.getMessage());
         }
@@ -364,13 +373,43 @@ public class ParkingLotTest {
     public void givenAVehicleColourAndBrand_WhenParked_ShouldReturnTheObject() {
         ParkingLot parkingLot = new ParkingLot(5);
         Object vehicle2 = new Object();
-        ParkingSlots parkingSlots = new ParkingSlots(vehicle, VehicleType.NORMAL, "TOYOTA", "GREEN", "MH 16 244");
-        ParkingSlots parkingSlots1 = new ParkingSlots(vehicle2, VehicleType.NORMAL, "INDICA", "GREEN", "MH 16 244");
+        Object vehicle4 = new Object();
+        Object vehicle5 = new Object();
+        try {
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "BLUE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "TOYOTA", "GREEN", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle4, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle5, VehicleType.NORMAL, "TOYOTA", "BLUE", "MH 16 244");
+            ArrayList<Integer> list = parkingLot.getVehicleList();
+            ArrayList<Integer> listOfBlue = parkingLot.findCarByColour(list, "BLUE");
+            ArrayList<Integer> toyota = parkingLot.findCarByBrand(listOfBlue, "TOYOTA");
+            ArrayList<Integer> vehicleList = new ArrayList<>(Arrays.asList(4, 1));
+            Assert.assertEquals(vehicleList, toyota);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals("No spaces for large vehicle", e.getMessage());
+        }
+    }
+
+    @Test
+    public void givenAVehicleBrand_WhenParked_ShouldReturnTheListOfCars() {
+        ParkingLot parkingLot = new ParkingLot(5);
+        Object vehicle2 = new Object();
+        Object vehicle3 = new Object();
+        Object vehicle4 = new Object();
+        Object vehicle5 = new Object();
         try {
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "GREEN", "MH 16 244");
-            ParkingSlots carByBrand = parkingLot.findCarByBrand("TOYOTA", "GREEN");
-            Assert.assertTrue(parkingSlots.equals(carByBrand));
-            Assert.assertFalse(parkingSlots1.equals(carByBrand));
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle4, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle5, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244");
+            ArrayList<Integer> list = parkingLot.getVehicleList();
+            ArrayList<Integer> carList = parkingLot.findCarByColour(list, "GREEN");
+            ArrayList<Integer> potentialCarList = new ArrayList<Integer>(Arrays.asList(4, 3, 2, 0));
+            Assert.assertEquals(potentialCarList, carList);
+            ArrayList<Integer> bmwList = parkingLot.findCarByBrand(carList, "BMW");
+            ArrayList<Integer> potentialBMWCarList = new ArrayList<Integer>(Arrays.asList(3, 2, 0));
+            Assert.assertEquals(potentialBMWCarList, bmwList);
         } catch (ParkingLotException e) {
             Assert.assertEquals("No spaces for large vehicle", e.getMessage());
         }
