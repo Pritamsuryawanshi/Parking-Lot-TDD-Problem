@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ParkingLotTest {
     Object vehicle = null;
@@ -25,7 +26,6 @@ public class ParkingLotTest {
         owner = new ParkingLotOwner();
         airPortSecurity = new AirportSecurity();
     }
-
 
     @Test
     public void givenAVehicle_WhenParked_ShouldReturnTrue() {
@@ -405,13 +405,26 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle5, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244");
             ArrayList<Integer> list = parkingLot.getVehicleList();
             ArrayList<Integer> carList = parkingLot.findCarByColour(list, "GREEN");
-            ArrayList<Integer> potentialCarList = new ArrayList<Integer>(Arrays.asList(4, 3, 2, 0));
+            ArrayList<Integer> potentialCarList = new ArrayList<>(Arrays.asList(4, 3, 2, 0));
             Assert.assertEquals(potentialCarList, carList);
             ArrayList<Integer> bmwList = parkingLot.findCarByBrand(carList, "BMW");
-            ArrayList<Integer> potentialBMWCarList = new ArrayList<Integer>(Arrays.asList(3, 2, 0));
+            ArrayList<Integer> potentialBMWCarList = new ArrayList<>(Arrays.asList(3, 2, 0));
             Assert.assertEquals(potentialBMWCarList, bmwList);
         } catch (ParkingLotException e) {
             Assert.assertEquals("No spaces for large vehicle", e.getMessage());
+        }
+    }
+
+    @Test
+    public void givenAVehicle_WhenParkedFor30Minutes_ShouldReturnVehicle() {
+        Object vehicle = new Object();
+        List blankList = new ArrayList();
+        try {
+            parkingLot.parkingAttendant(this.vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            ArrayList<Integer> parkedCars = parkingLot.calculateTime();
+            Assert.assertEquals(blankList, parkedCars);
+        } catch (ParkingLotException e) {
         }
     }
 }

@@ -1,8 +1,12 @@
 package parkinglot;
+
+import org.apache.commons.lang3.time.StopWatch;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class ParkingSlots {
-    public LocalDateTime time;
+    float time;
     Object vehicle;
     VehicleType type;
     String colour;
@@ -10,16 +14,16 @@ public class ParkingSlots {
     String plateNumber;
 
     public ParkingSlots(Object vehicle, VehicleType type, String brand, String colour, String plateNumber) {
-        this.plateNumber=plateNumber;
-        this.brand=brand;
-        this.colour=colour;
+        this.plateNumber = plateNumber;
+        this.brand = brand;
+        this.colour = colour;
+        this.time = System.currentTimeMillis() / 10000;
         this.vehicle = vehicle;
-        this.time = LocalDateTime.now();
-        this.type=type;
+        this.type = type;
     }
 
     public ParkingSlots(Object vehicle) {
-        this.vehicle=vehicle;
+        this.vehicle = vehicle;
     }
 
     @Override

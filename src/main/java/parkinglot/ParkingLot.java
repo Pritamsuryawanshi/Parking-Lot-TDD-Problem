@@ -1,5 +1,7 @@
 package parkinglot;
 
+import org.apache.commons.lang3.time.StopWatch;
+
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -9,10 +11,13 @@ public class ParkingLot {
     static List<ParkingSlots> vehicles = new ArrayList<>();
     Informer informer;
     ParkingRules parkingRules;
-    ArrayList<Integer> list ;
+    ArrayList<Integer> list;
+    StopWatch watch;
+
 
     public ParkingLot(int capacity) {
-        list= new ArrayList<>();
+        watch = new StopWatch();
+        list = new ArrayList<>();
         parkingRules = new ParkingRules();
         informer = new Informer();
         this.actualCapacity = capacity;
@@ -49,7 +54,7 @@ public class ParkingLot {
 
     public boolean unPark(Object vehicle) throws ParkingLotException {
         ParkingSlots parkingSlot = new ParkingSlots(vehicle);
-        if (this.vehicles.contains(parkingSlot)) {
+        if (vehicles.contains(parkingSlot)) {
             vehicles.set(vehicles.indexOf(parkingSlot), null);
             informer.notifyAvailable();
             return true;
@@ -83,7 +88,7 @@ public class ParkingLot {
         if (filledSlots.isEmpty())
             return false;
         for (int i = 0; i < filledSlots.size(); i++) {
-            if (vehicles.get(filledSlots.get(i)).time == null) {
+            if (vehicles.get(filledSlots.get(i)).time == 0) {
                 return false;
             }
         }
@@ -122,5 +127,15 @@ public class ParkingLot {
 
     public ParkingSlots getObject(Integer index) {
         return vehicles.get(index);
+    }
+
+    public ArrayList<Integer> calculateTime() {
+        float end = System.currentTimeMillis() / 1000;
+        ArrayList<Integer> filledSlots = new ArrayList();
+        IntStream.range(0, vehicles.size())
+                .filter(index -> vehicles.get(index) != null)
+                .filter(index -> vehicles.get(index).time - end >= 1800.0)
+                .forEach(index -> filledSlots.add(index));
+        return filledSlots;
     }
 }
