@@ -131,11 +131,11 @@ public class ParkingLot {
 
     public ArrayList<Integer> calculateTime() {
         float end = System.currentTimeMillis() / 1000;
-        ArrayList<Integer> filledSlots = new ArrayList();
+        ArrayList<Integer> vehicleList = new ArrayList();
         IntStream.range(0, vehicles.size())
                 .filter(index -> vehicles.get(index) != null)
                 .filter(index -> vehicles.get(index).time - end >= 1800.0)
-                .forEach(index -> filledSlots.add(index));
-        return filledSlots;
+                .forEach(index -> vehicleList.add(index));
+        return vehicleList;
     }
 }
