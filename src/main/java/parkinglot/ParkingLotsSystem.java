@@ -19,6 +19,10 @@ public class ParkingLotsSystem {
         addLot = this.parkingLotList.add(parkingLot);
     }
 
+    public boolean isVehicleParked(Object vehicle) {
+        return parkingLot.isVehicleParked(vehicle);
+    }
+
     public void registerParkingLots(ParkingLotObserver observer) {
         informer.registerParkingLotObserver(observer);
     }

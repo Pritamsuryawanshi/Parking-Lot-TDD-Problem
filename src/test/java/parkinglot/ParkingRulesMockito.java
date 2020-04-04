@@ -9,7 +9,7 @@ import java.util.Arrays;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class parkingLotMockito {
+public class ParkingRulesMockito {
 
     @Test
     public void whenParkingSpotIsAskedForHandicappedDriver_ShouldReturnNearestSpot() {
