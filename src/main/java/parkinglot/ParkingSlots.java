@@ -12,12 +12,14 @@ public class ParkingSlots {
     String colour;
     String brand;
     String plateNumber;
+    String row;
 
-    public ParkingSlots(Object vehicle, VehicleType type, String brand, String colour, String plateNumber) {
+    public ParkingSlots(Object vehicle, VehicleType type, String brand, String colour, String plateNumber, String row) {
+        this.row = row;
         this.plateNumber = plateNumber;
         this.brand = brand;
         this.colour = colour;
-        this.time = System.currentTimeMillis() / 10000;
+        this.time = System.currentTimeMillis() / 100;
         this.vehicle = vehicle;
         this.type = type;
     }

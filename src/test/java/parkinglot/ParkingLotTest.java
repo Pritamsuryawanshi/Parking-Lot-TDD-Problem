@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class ParkingLotTest {
     Object vehicle = null;
@@ -31,7 +30,7 @@ public class ParkingLotTest {
     public void givenAVehicle_WhenParked_ShouldReturnTrue() {
         ParkingLot parkingLot = new ParkingLot(5);
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
             boolean isParked = parkingLot.isVehicleParked(vehicle);
             Assert.assertTrue(isParked);
         } catch (ParkingLotException e) {
@@ -43,9 +42,9 @@ public class ParkingLotTest {
     public void givenAVehicle_WhenParked_ShouldReturnrue() {
         Object vehicle = new Object();
         try {
-            parkingLot.parkingAttendant(this.vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle, VehicleType.HANDICAP, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(new Object(), VehicleType.HANDICAP, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(this.vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle, VehicleType.HANDICAP, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(new Object(), VehicleType.HANDICAP, "WHITE", "WHITE", "MH 16 244", "B");
             boolean isParked = parkingLot.isVehicleParked(this.vehicle);
             Assert.assertTrue(isParked);
         } catch (ParkingLotException e) {
@@ -56,8 +55,8 @@ public class ParkingLotTest {
     @Test
     public void givenAVehicle_WhenSpaceIsFull_ShouldThrowException() {
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
         } catch (ParkingLotException e) {
             Assert.assertEquals("Parking Lot is full", e.getMessage());
         }
@@ -66,8 +65,8 @@ public class ParkingLotTest {
     @Test
     public void givenAVehicle_WhenAlreadyParked_ShouldThrowException() {
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
         } catch (ParkingLotException e) {
             Assert.assertEquals("Vehicle already parked", e.getMessage());
         }
@@ -76,7 +75,7 @@ public class ParkingLotTest {
     @Test
     public void givenAVehicle_WhenUnParked_ShouldReturnTrue() {
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
             boolean unPark = parkingLot.unPark(vehicle);
             Assert.assertTrue(unPark);
         } catch (ParkingLotException e) {
@@ -90,8 +89,8 @@ public class ParkingLotTest {
         ParkingLotOwner owner = new ParkingLotOwner();
         parkingLot.registerParkingLotObserver(owner);
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = owner.isCapacityFull();
@@ -104,9 +103,9 @@ public class ParkingLotTest {
         ParkingLotOwner owner = new ParkingLotOwner();
         parkingLot.registerParkingLotObserver(owner);
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
             parkingLot.unPark(vehicle);
-            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = owner.isCapacityFull();
@@ -118,7 +117,7 @@ public class ParkingLotTest {
         ParkingLotOwner owner = new ParkingLotOwner();
         parkingLot.registerParkingLotObserver(owner);
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = owner.isCapacityFull();
@@ -130,8 +129,8 @@ public class ParkingLotTest {
         Object vehicle2 = new Object();
         parkingLot.setCapacity(2);
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
             boolean isParked1 = parkingLot.isVehicleParked(vehicle);
             boolean isParked2 = parkingLot.isVehicleParked(vehicle2);
             Assert.assertTrue(isParked1 && isParked2);
@@ -144,8 +143,8 @@ public class ParkingLotTest {
         AirportSecurity airportSecurity = new AirportSecurity();
         parkingLot.registerParkingLotObserver(airportSecurity);
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = airportSecurity.isCapacityFull();
@@ -157,7 +156,7 @@ public class ParkingLotTest {
         AirportSecurity airportSecurity = new AirportSecurity();
         parkingLot.registerParkingLotObserver(airportSecurity);
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = airportSecurity.isCapacityFull();
@@ -171,9 +170,9 @@ public class ParkingLotTest {
         AirportSecurity airportSecurity = new AirportSecurity();
         parkingLot.registerParkingLotObserver(airportSecurity);
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
             parkingLot.unPark(vehicle);
-            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = airportSecurity.isCapacityFull();
@@ -184,7 +183,7 @@ public class ParkingLotTest {
     @Test
     public void givenCar_ParkingAttendantShouldParkTheCar() {
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }
@@ -197,8 +196,8 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot(2);
         Object vehicle2 = new Object();
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
             int slotNumberZero = parkingLot.findMyCar(vehicle);
             int slotNUmberOne = parkingLot.findMyCar(vehicle2);
             Assert.assertEquals(1, slotNumberZero);
@@ -228,8 +227,8 @@ public class ParkingLotTest {
     @Test
     public void givenCarParked_WhenTimeIsSet_ShouldReturnTrue() {
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
             boolean timeSet = parkingLot.isTimeSet();
             Assert.assertTrue(timeSet);
         } catch (ParkingLotException e) {
@@ -248,9 +247,9 @@ public class ParkingLotTest {
         Object vehicle2 = new Object();
         Object vehicle3 = new Object();
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
             int myCar = parkingLot.findMyCar(vehicle);
             int myCar1 = parkingLot.findMyCar(vehicle2);
             int myCar2 = parkingLot.findMyCar(vehicle3);
@@ -269,11 +268,11 @@ public class ParkingLotTest {
         Object handicappedPersonsCar = new Object();
         Object handicappedPersonsCar2 = new Object();
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(handicappedPersonsCar, VehicleType.HANDICAP, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(handicappedPersonsCar2, VehicleType.HANDICAP, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(handicappedPersonsCar, VehicleType.HANDICAP, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(handicappedPersonsCar2, VehicleType.HANDICAP, "WHITE", "WHITE", "MH 16 244", "B");
             int myCar = parkingLot.findMyCar(handicappedPersonsCar);
             int myCar2 = parkingLot.findMyCar(handicappedPersonsCar2);
             Assert.assertEquals(0, myCar);
@@ -289,8 +288,8 @@ public class ParkingLotTest {
         parkingLotsSystem.registerParkingLots(airPortSecurity);
         Object vehicle2 = new Object();
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
             boolean isCapacityFull = airPortSecurity.isCapacityFull();
             Assert.assertTrue(isCapacityFull);
         } catch (ParkingLotException e) {
@@ -308,8 +307,8 @@ public class ParkingLotTest {
     public void givenALargeVehicle_WhenParked_ShouldReturnTrue() {
         Object vehicleLarge = new Object();
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicleLarge, VehicleType.LARGE, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicleLarge, VehicleType.LARGE, "WHITE", "WHITE", "MH 16 244", "B");
             boolean isParked = parkingLot.isVehicleParked(vehicleLarge);
             Assert.assertTrue(isParked);
         } catch (ParkingLotException e) {
@@ -324,11 +323,11 @@ public class ParkingLotTest {
         Object vehicle3 = new Object();
         Object vehicle4 = new Object();
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle2, VehicleType.LARGE, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle4, VehicleType.LARGE, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicleLarge, VehicleType.LARGE, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.LARGE, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle4, VehicleType.LARGE, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicleLarge, VehicleType.LARGE, "WHITE", "WHITE", "MH 16 244", "B");
             boolean isParked = parkingLot.isVehicleParked(vehicle3);
             Assert.assertTrue(isParked);
         } catch (ParkingLotException e) {
@@ -339,8 +338,8 @@ public class ParkingLotTest {
     public void givenAVehicleColour_WhenParked_ShouldReturnTheSlotNumber() {
         ParkingLot parkingLot = new ParkingLot(5);
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "GREEN", "MH 16 244");
-            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "GREEN", "MH 16 244", "B");
+            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
             ArrayList<Integer> list = parkingLot.getVehicleList();
             ArrayList<Integer> spot = parkingLot.findCarByColour(list, "GREEN");
             int location = spot.get(0);
@@ -354,8 +353,8 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot(5);
         Object vehicle2 = new Object();
         try {
-            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "TOYOTA", "BLUE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 19 244");
+            parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "TOYOTA", "BLUE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 19 244", "B");
             ArrayList<Integer> list = parkingLot.getVehicleList();
             ArrayList<Integer> blue = parkingLot.findCarByColour(list, "BLUE");
             ArrayList<Integer> toyota = parkingLot.findCarByBrand(blue, "TOYOTA");
@@ -376,10 +375,10 @@ public class ParkingLotTest {
         Object vehicle4 = new Object();
         Object vehicle5 = new Object();
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "BLUE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "TOYOTA", "GREEN", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle4, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle5, VehicleType.NORMAL, "TOYOTA", "BLUE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "BLUE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "TOYOTA", "GREEN", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle4, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle5, VehicleType.NORMAL, "TOYOTA", "BLUE", "MH 16 244", "B");
             ArrayList<Integer> list = parkingLot.getVehicleList();
             ArrayList<Integer> listOfBlue = parkingLot.findCarByColour(list, "BLUE");
             ArrayList<Integer> toyota = parkingLot.findCarByBrand(listOfBlue, "TOYOTA");
@@ -398,11 +397,11 @@ public class ParkingLotTest {
         Object vehicle4 = new Object();
         Object vehicle5 = new Object();
         try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "GREEN", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle4, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle5, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "GREEN", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle4, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle5, VehicleType.NORMAL, "BMW", "GREEN", "MH 16 244", "B");
             ArrayList<Integer> list = parkingLot.getVehicleList();
             ArrayList<Integer> carList = parkingLot.findCarByColour(list, "GREEN");
             ArrayList<Integer> potentialCarList = new ArrayList<>(Arrays.asList(4, 3, 2, 0));
@@ -417,14 +416,36 @@ public class ParkingLotTest {
 
     @Test
     public void givenAVehicle_WhenParkedFor30Minutes_ShouldReturnVehicle() {
-        Object vehicle = new Object();
-        List blankList = new ArrayList();
+        ParkingLot parkingLot = new ParkingLot(5);
+        Object vehicle1 = new Object();
+        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(3, 4));
         try {
-            parkingLot.parkingAttendant(this.vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244");
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle1, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "B");
             ArrayList<Integer> parkedCars = parkingLot.calculateTime();
-            Assert.assertEquals(blankList, parkedCars);
+            System.out.println("crss " + parkedCars);
+            Assert.assertEquals(list, parkedCars);
         } catch (ParkingLotException e) {
+            Assert.assertEquals("", e.getMessage());
+        }
+    }
+
+    @Test
+    public void givenAHandicappedVehicle_WhenParkedInBOrDRow_ShouldReturnVehicle() {
+        ParkingLot parkingLot = new ParkingLot(5);
+        Object vehicle1 = new Object();
+        Object vehicle2 = new Object();
+        Object vehicle3 = new Object();
+        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(0, 1));
+        try {
+            parkingLot.parkingAttendant(vehicle, VehicleType.HANDICAP, "WHITE", "WHITE", "MH 16 244", "B");
+            parkingLot.parkingAttendant(vehicle1, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "D");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "WHITE", "WHITE", "MH 16 244", "A");
+            parkingLot.parkingAttendant(vehicle3, VehicleType.HANDICAP, "WHITE", "WHITE", "MH 16 244", "B");
+            ArrayList<Integer> vehiclesByRow = parkingLot.findVehiclesByRow();
+            Assert.assertEquals(list, vehiclesByRow);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals("", e.getMessage());
         }
     }
 }

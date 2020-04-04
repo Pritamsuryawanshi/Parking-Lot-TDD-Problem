@@ -38,8 +38,8 @@ public class ParkingLot {
         this.actualCapacity = capacity;
     }
 
-    public boolean park(Object vehicle, int availableSlot, VehicleType type, String brand, String colour, String plateNumber) throws ParkingLotException {
-        ParkingSlots parkingSlots = new ParkingSlots(vehicle, type, colour, brand, plateNumber);
+    public boolean park(Object vehicle, int availableSlot, VehicleType type, String brand, String colour, String plateNumber, String row) throws ParkingLotException {
+        ParkingSlots parkingSlots = new ParkingSlots(vehicle, type, colour, brand, plateNumber, row);
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
         vehicles.set(availableSlot, parkingSlots);
@@ -62,10 +62,10 @@ public class ParkingLot {
         throw new ParkingLotException("Vehicle is not parked");
     }
 
-    public boolean parkingAttendant(Object vehicle, VehicleType type, String brand, String colour, String plateNumber) throws ParkingLotException {
+    public boolean parkingAttendant(Object vehicle, VehicleType type, String brand, String colour, String plateNumber, String row) throws ParkingLotException {
         ArrayList<Integer> availableSlot = getAvailableSlots(type);
         int spot = parkingRules.decideParkingSpot(type, availableSlot);
-        return park(vehicle, spot, type, colour, brand, plateNumber);
+        return park(vehicle, spot, type, colour, brand, plateNumber, row);
     }
 
     private ArrayList<Integer> getAvailableSlots(VehicleType type) throws ParkingLotException {
@@ -130,12 +130,22 @@ public class ParkingLot {
     }
 
     public ArrayList<Integer> calculateTime() {
-        float end = System.currentTimeMillis() / 1000;
+        float end = System.currentTimeMillis() / 100;
         ArrayList<Integer> vehicleList = new ArrayList();
         IntStream.range(0, vehicles.size())
                 .filter(index -> vehicles.get(index) != null)
-                .filter(index -> vehicles.get(index).time - end >= 1800.0)
+                .filter(index -> vehicles.get(index).time - end <= 30)
                 .forEach(index -> vehicleList.add(index));
+        return vehicleList;
+    }
+
+    public ArrayList<Integer> findVehiclesByRow() {
+        ArrayList<Integer> vehicleList = new ArrayList();
+        IntStream.range(0, list.size())
+                .filter(index -> vehicles.get(list.get(index)) != null)
+                .filter(index -> vehicles.get(list.get(index)).type == VehicleType.HANDICAP)
+                .filter(index -> vehicles.get(list.get(index)).row == "B" || vehicles.get(list.get(index)).row == "B")
+                .forEach(index -> vehicleList.add(list.get(index)));
         return vehicleList;
     }
 }
