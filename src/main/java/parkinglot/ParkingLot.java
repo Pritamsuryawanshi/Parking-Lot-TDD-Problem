@@ -38,7 +38,9 @@ public class ParkingLot {
         this.actualCapacity = capacity;
     }
 
-    public boolean park(Object vehicle, int availableSlot, VehicleType type, String brand, String colour, String plateNumber, String row) throws ParkingLotException {
+    public boolean park(Object vehicle, int availableSlot, VehicleType type,
+                        String brand, String colour,
+                        String plateNumber, String row) throws ParkingLotException {
         ParkingSlots parkingSlots = new ParkingSlots(vehicle, type, colour, brand, plateNumber, row);
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
@@ -62,7 +64,9 @@ public class ParkingLot {
         throw new ParkingLotException("Vehicle is not parked");
     }
 
-    public boolean parkingAttendant(Object vehicle, VehicleType type, String brand, String colour, String plateNumber, String row) throws ParkingLotException {
+    public boolean parkingAttendant(Object vehicle, VehicleType type,
+                                    String brand, String colour,
+                                    String plateNumber, String row) throws ParkingLotException {
         ArrayList<Integer> availableSlot = getAvailableSlots(type);
         int spot = parkingRules.decideParkingSpot(type, availableSlot);
         return park(vehicle, spot, type, colour, brand, plateNumber, row);
@@ -144,7 +148,8 @@ public class ParkingLot {
         IntStream.range(0, list.size())
                 .filter(index -> vehicles.get(list.get(index)) != null)
                 .filter(index -> vehicles.get(list.get(index)).type == VehicleType.HANDICAP)
-                .filter(index -> vehicles.get(list.get(index)).row == "B" || vehicles.get(list.get(index)).row == "B")
+                .filter(index -> vehicles.get(list.get(index)).row == "B" ||
+                        vehicles.get(list.get(index)).row == "B")
                 .forEach(index -> vehicleList.add(list.get(index)));
         return vehicleList;
     }
