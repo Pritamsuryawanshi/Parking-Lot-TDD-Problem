@@ -1,10 +1,5 @@
 package parkinglot;
 
-import org.apache.commons.lang3.time.StopWatch;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
-
 public class ParkingSlots {
     float time;
     Object vehicle;

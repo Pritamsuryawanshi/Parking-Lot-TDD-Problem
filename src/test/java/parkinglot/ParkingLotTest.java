@@ -7,6 +7,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.junit.Assert.*;
+
 public class ParkingLotTest {
     Object vehicle = null;
     ParkingLot parkingLot = null;
@@ -32,9 +34,9 @@ public class ParkingLotTest {
         try {
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             boolean isParked = parkingLot.isVehicleParked(vehicle);
-            Assert.assertTrue(isParked);
+            assertTrue(isParked);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("No spaces for large vehicle", e.getMessage());
+            assertEquals("No spaces for large vehicle", e.getMessage());
         }
     }
 
@@ -46,9 +48,9 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle, VehicleType.HANDICAP, "TOYOTA", "WHITE", "MH 16 244", "B");
             parkingLot.parkingAttendant(new Object(), VehicleType.HANDICAP, "TOYOTA", "WHITE", "MH 16 244", "B");
             boolean isParked = parkingLot.isVehicleParked(this.vehicle);
-            Assert.assertTrue(isParked);
+            assertTrue(isParked);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("Lot is full", e.getMessage());
+            assertEquals("Lot is full", e.getMessage());
         }
     }
 
@@ -58,7 +60,7 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
         } catch (ParkingLotException e) {
-            Assert.assertEquals("Parking Lot is full", e.getMessage());
+            assertEquals("Parking Lot is full", e.getMessage());
         }
     }
 
@@ -68,7 +70,7 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
         } catch (ParkingLotException e) {
-            Assert.assertEquals("Vehicle already parked", e.getMessage());
+            assertEquals("Vehicle already parked", e.getMessage());
         }
     }
 
@@ -77,7 +79,7 @@ public class ParkingLotTest {
         try {
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             boolean unPark = parkingLot.unPark(vehicle);
-            Assert.assertTrue(unPark);
+            assertTrue(unPark);
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }
@@ -94,7 +96,7 @@ public class ParkingLotTest {
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = owner.isCapacityFull();
-        Assert.assertTrue(capacityFull);
+        assertTrue(capacityFull);
     }
 
     @Test
@@ -109,7 +111,7 @@ public class ParkingLotTest {
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = owner.isCapacityFull();
-        Assert.assertFalse(capacityFull);
+        assertFalse(capacityFull);
     }
 
     @Test
@@ -121,7 +123,7 @@ public class ParkingLotTest {
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = owner.isCapacityFull();
-        Assert.assertFalse(capacityFull);
+        assertFalse(capacityFull);
     }
 
     @Test
@@ -133,7 +135,7 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             boolean isParked1 = parkingLot.isVehicleParked(vehicle);
             boolean isParked2 = parkingLot.isVehicleParked(vehicle2);
-            Assert.assertTrue(isParked1 && isParked2);
+            assertTrue(isParked1 && isParked2);
         } catch (ParkingLotException e) {
         }
     }
@@ -148,7 +150,7 @@ public class ParkingLotTest {
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = airportSecurity.isCapacityFull();
-        Assert.assertTrue(capacityFull);
+        assertTrue(capacityFull);
     }
 
     @Test
@@ -160,7 +162,7 @@ public class ParkingLotTest {
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = airportSecurity.isCapacityFull();
-        Assert.assertFalse(capacityFull);
+        assertFalse(capacityFull);
     }
 
 
@@ -176,7 +178,7 @@ public class ParkingLotTest {
         } catch (ParkingLotException e) {
         }
         boolean capacityFull = airportSecurity.isCapacityFull();
-        Assert.assertFalse(capacityFull);
+        assertFalse(capacityFull);
     }
 
 
@@ -188,7 +190,7 @@ public class ParkingLotTest {
             e.printStackTrace();
         }
         boolean isParked = parkingLot.isVehicleParked(vehicle);
-        Assert.assertTrue(isParked);
+        assertTrue(isParked);
     }
 
     @Test
@@ -200,8 +202,8 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             int slotNumberZero = parkingLot.findMyCar(vehicle);
             int slotNUmberOne = parkingLot.findMyCar(vehicle2);
-            Assert.assertEquals(1, slotNumberZero);
-            Assert.assertEquals(0, slotNUmberOne);
+            assertEquals(1, slotNumberZero);
+            assertEquals(0, slotNUmberOne);
         } catch (ParkingLotException e) {
         }
     }
@@ -211,7 +213,7 @@ public class ParkingLotTest {
         try {
             parkingLot.findMyCar(vehicle);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("Car is not Parked", e.getMessage());
+            assertEquals("Car is not Parked", e.getMessage());
         }
     }
 
@@ -220,7 +222,7 @@ public class ParkingLotTest {
         try {
             parkingLot.unPark(vehicle);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("Vehicle is not parked", e.getMessage());
+            assertEquals("Vehicle is not parked", e.getMessage());
         }
     }
 
@@ -230,7 +232,7 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             parkingLot.parkingAttendant(new Object(), VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             boolean timeSet = parkingLot.isTimeSet();
-            Assert.assertTrue(timeSet);
+            assertTrue(timeSet);
         } catch (ParkingLotException e) {
         }
     }
@@ -238,7 +240,7 @@ public class ParkingLotTest {
     @Test
     public void givenCarNotParked_AndTimeIsNotSte_ShouldReturnFalse() {
         boolean timeSet = parkingLot.isTimeSet();
-        Assert.assertFalse(timeSet);
+        assertFalse(timeSet);
     }
 
     @Test
@@ -253,9 +255,9 @@ public class ParkingLotTest {
             int myCar = parkingLot.findMyCar(vehicle);
             int myCar1 = parkingLot.findMyCar(vehicle2);
             int myCar2 = parkingLot.findMyCar(vehicle3);
-            Assert.assertEquals(2, myCar);
-            Assert.assertEquals(1, myCar1);
-            Assert.assertEquals(0, myCar2);
+            assertEquals(2, myCar);
+            assertEquals(1, myCar1);
+            assertEquals(0, myCar2);
         } catch (ParkingLotException e) {
         }
     }
@@ -275,10 +277,10 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(handicappedPersonsCar2, VehicleType.HANDICAP, "WHITE", "WHITE", "MH 16 244", "B");
             int myCar = parkingLot.findMyCar(handicappedPersonsCar);
             int myCar2 = parkingLot.findMyCar(handicappedPersonsCar2);
-            Assert.assertEquals(0, myCar);
-            Assert.assertEquals(1, myCar2);
+            assertEquals(0, myCar);
+            assertEquals(1, myCar2);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("Lot is full", e.getMessage());
+            assertEquals("Lot is full", e.getMessage());
         }
     }
     //multiple lots
@@ -291,7 +293,7 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             boolean isCapacityFull = airPortSecurity.isCapacityFull();
-            Assert.assertTrue(isCapacityFull);
+            assertTrue(isCapacityFull);
         } catch (ParkingLotException e) {
         }
     }
@@ -300,7 +302,7 @@ public class ParkingLotTest {
     public void givenVehicle_WhenParkedUsingParkingSystem_ShouldReturnTrue() throws ParkingLotException {
         parkingLotsSystem.park(vehicle, VehicleType.NORMAL);
         boolean vehicleParked = parkingLot.isVehicleParked(vehicle);
-        Assert.assertTrue(vehicleParked);
+        assertTrue(vehicleParked);
     }
 
     @Test
@@ -310,7 +312,7 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             parkingLot.parkingAttendant(vehicleLarge, VehicleType.LARGE, "TOYOTA", "WHITE", "MH 16 244", "B");
             boolean isParked = parkingLot.isVehicleParked(vehicleLarge);
-            Assert.assertTrue(isParked);
+            assertTrue(isParked);
         } catch (ParkingLotException e) {
         }
     }
@@ -329,7 +331,7 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle4, VehicleType.LARGE, "TOYOTA", "WHITE", "MH 16 244", "B");
             parkingLot.parkingAttendant(vehicleLarge, VehicleType.LARGE, "TOYOTA", "WHITE", "MH 16 244", "B");
             boolean isParked = parkingLot.isVehicleParked(vehicle3);
-            Assert.assertTrue(isParked);
+            assertTrue(isParked);
         } catch (ParkingLotException e) {
         }
     }
@@ -343,7 +345,7 @@ public class ParkingLotTest {
             ArrayList<Integer> list = parkingLot.getVehicleList();
             ArrayList<Integer> spot = parkingLot.findCarByColour(list, "GREEN");
             int location = spot.get(0);
-            Assert.assertEquals(4, location);
+            assertEquals(4, location);
         } catch (ParkingLotException e) {
         }
     }
@@ -359,12 +361,12 @@ public class ParkingLotTest {
             ArrayList<Integer> blue = parkingLot.findCarByColour(list, "BLUE");
             ArrayList<Integer> toyota = parkingLot.findCarByBrand(blue, "TOYOTA");
             ParkingSlots object = parkingLot.getObject(toyota.get(0));
-            Assert.assertEquals("TOYOTA", object.brand);
-            Assert.assertEquals("BLUE", object.colour);
-            Assert.assertNotEquals("WHITE", object.colour);
-            Assert.assertEquals("MH 16 244", object.plateNumber);
+            assertEquals("TOYOTA", object.brand);
+            assertEquals("BLUE", object.colour);
+            assertNotEquals("WHITE", object.colour);
+            assertEquals("MH 16 244", object.plateNumber);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("No spaces for large vehicle", e.getMessage());
+            assertEquals("No spaces for large vehicle", e.getMessage());
         }
     }
 
@@ -383,9 +385,9 @@ public class ParkingLotTest {
             ArrayList<Integer> listOfBlue = parkingLot.findCarByColour(list, "BLUE");
             ArrayList<Integer> toyota = parkingLot.findCarByBrand(listOfBlue, "TOYOTA");
             ArrayList<Integer> vehicleList = new ArrayList<>(Arrays.asList(4, 1));
-            Assert.assertEquals(vehicleList, toyota);
+            assertEquals(vehicleList, toyota);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("No spaces for large vehicle", e.getMessage());
+            assertEquals("No spaces for large vehicle", e.getMessage());
         }
     }
 
@@ -405,12 +407,12 @@ public class ParkingLotTest {
             ArrayList<Integer> list = parkingLot.getVehicleList();
             ArrayList<Integer> carList = parkingLot.findCarByColour(list, "GREEN");
             ArrayList<Integer> potentialCarList = new ArrayList<>(Arrays.asList(4, 3, 2, 0));
-            Assert.assertEquals(potentialCarList, carList);
+            assertEquals(potentialCarList, carList);
             ArrayList<Integer> bmwList = parkingLot.findCarByBrand(carList, "BMW");
             ArrayList<Integer> potentialBMWCarList = new ArrayList<>(Arrays.asList(3, 2, 0));
-            Assert.assertEquals(potentialBMWCarList, bmwList);
+            assertEquals(potentialBMWCarList, bmwList);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("No spaces for large vehicle", e.getMessage());
+            assertEquals("No spaces for large vehicle", e.getMessage());
         }
     }
 
@@ -423,9 +425,9 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             parkingLot.parkingAttendant(vehicle1, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "B");
             ArrayList<Integer> parkedCars = parkingLot.calculateTime();
-            Assert.assertEquals(list, parkedCars);
+            assertEquals(list, parkedCars);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("", e.getMessage());
+            assertEquals("", e.getMessage());
         }
     }
 
@@ -442,9 +444,9 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "A");
             parkingLot.parkingAttendant(vehicle3, VehicleType.HANDICAP, "TOYOTA", "WHITE", "MH 16 244", "B");
             ArrayList<Integer> vehiclesByRow = parkingLot.findVehiclesByRow();
-            Assert.assertEquals(list, vehiclesByRow);
+            assertEquals(list, vehiclesByRow);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("", e.getMessage());
+            assertEquals("", e.getMessage());
         }
     }
 
@@ -461,9 +463,9 @@ public class ParkingLotTest {
             parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "TOYOTA", "WHITE", "MH 16 244", "A");
             parkingLot.parkingAttendant(vehicle3, VehicleType.HANDICAP, "TOYOTA", "WHITE", "MH 16 244", "B");
             ArrayList<Integer> parkedVehicles = parkingLot.getVehicleList();
-            Assert.assertEquals(list, parkedVehicles);
+            assertEquals(list, parkedVehicles);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("", e.getMessage());
+            assertEquals("", e.getMessage());
         }
     }
 }
