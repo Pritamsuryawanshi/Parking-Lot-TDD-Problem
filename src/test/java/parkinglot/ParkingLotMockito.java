@@ -1,13 +1,13 @@
 package parkinglot;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
 public class ParkingLotMockito {
@@ -15,12 +15,11 @@ public class ParkingLotMockito {
     ParkingLotsSystem parkingLotsSystem;
 
     ParkingLot parkingLot;
-    Object vehicle = null;
-    //  ParkingLotsSystem parkingLotsSystem;
+    Vehicle vehicle = null;
 
     @Before
     public void setUp() {
-        vehicle = new Object();
+        vehicle = new Vehicle();
         parkingLot = mock(ParkingLot.class);
         parkingLotsSystem = mock(ParkingLotsSystem.class);
         parkingLotsSystem.addLot(parkingLot);
@@ -32,4 +31,14 @@ public class ParkingLotMockito {
         boolean isParked = parkingLotsSystem.isVehicleParked(vehicle);
         assertFalse(isParked);
     }
+
+    @Test
+    public void givenANormalVehicle_WhenReadyToParkParked_ShouldReturnTheParkingSpot() throws ParkingLotException {
+        ParkingRules parkingRules = mock(ParkingRules.class);
+        ArrayList<Integer> availableSpot = new ArrayList<>(Arrays.asList(4, 3, 2, 1, 0));
+        when(parkingRules.decideParkingSpot(VehicleType.NORMAL, availableSpot)).thenReturn(1);
+        parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL);
+        int myCar = parkingLot.findMyCar(vehicle);
+    }
+
 }

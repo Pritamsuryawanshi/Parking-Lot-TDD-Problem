@@ -1,26 +1,28 @@
 package parkinglot;
 
+import java.security.PublicKey;
+
 public class ParkingSlots {
     float time;
-    Object vehicle;
+    Vehicle vehicle;
     VehicleType type;
     String colour;
     String brand;
     String plateNumber;
     String row;
 
-    public ParkingSlots(Object vehicle, VehicleType type, String brand, String colour, String plateNumber, String row) {
-        this.row = row;
-        this.plateNumber = plateNumber;
-        this.brand = brand;
-        this.colour = colour;
+    public ParkingSlots(Vehicle vehicle, VehicleType type) {
         this.time = System.currentTimeMillis() / 100;
         this.vehicle = vehicle;
         this.type = type;
     }
 
-    public ParkingSlots(Object vehicle) {
+    public ParkingSlots(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
     @Override

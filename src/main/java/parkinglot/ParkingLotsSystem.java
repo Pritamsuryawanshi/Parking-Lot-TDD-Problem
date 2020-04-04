@@ -19,7 +19,7 @@ public class ParkingLotsSystem {
         addLot = this.parkingLotList.add(parkingLot);
     }
 
-    public boolean isVehicleParked(Object vehicle) {
+    public boolean isVehicleParked(Vehicle vehicle) {
         return parkingLot.isVehicleParked(vehicle);
     }
 
@@ -27,7 +27,7 @@ public class ParkingLotsSystem {
         informer.registerParkingLotObserver(observer);
     }
 
-    public boolean park(Object vehicle, VehicleType type) throws ParkingLotException {
-        return parkingLot.parkingAttendant(vehicle, type, "WHITE", "WHITE", "MH 16 244", "B");
+    public boolean park(Vehicle vehicle, VehicleType type) throws ParkingLotException {
+        return parkingLot.parkingAttendant(vehicle, type);
     }
 }

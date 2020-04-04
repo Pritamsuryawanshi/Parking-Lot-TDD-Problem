@@ -38,10 +38,8 @@ public class ParkingLot {
         this.actualCapacity = capacity;
     }
 
-    public boolean park(Object vehicle, int availableSlot, VehicleType type,
-                        String brand, String colour,
-                        String plateNumber, String row) throws ParkingLotException {
-        ParkingSlots parkingSlots = new ParkingSlots(vehicle, type, colour, brand, plateNumber, row);
+    public boolean park(Vehicle vehicle, int availableSlot, VehicleType type) throws ParkingLotException {
+        ParkingSlots parkingSlots = new ParkingSlots(vehicle, type);
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
         vehicles.set(availableSlot, parkingSlots);
@@ -49,12 +47,12 @@ public class ParkingLot {
         return true;
     }
 
-    public boolean isVehicleParked(Object vehicle) {
+    public boolean isVehicleParked(Vehicle vehicle) {
         ParkingSlots parkingSlot = new ParkingSlots(vehicle);
         return vehicles.contains(parkingSlot);
     }
 
-    public boolean unPark(Object vehicle) throws ParkingLotException {
+    public boolean unPark(Vehicle vehicle) throws ParkingLotException {
         ParkingSlots parkingSlot = new ParkingSlots(vehicle);
         if (vehicles.contains(parkingSlot)) {
             vehicles.set(vehicles.indexOf(parkingSlot), null);
@@ -64,12 +62,11 @@ public class ParkingLot {
         throw new ParkingLotException("Vehicle is not parked");
     }
 
-    public boolean parkingAttendant(Object vehicle, VehicleType type,
-                                    String brand, String colour,
-                                    String plateNumber, String row) throws ParkingLotException {
+    public boolean parkingAttendant(Vehicle vehicle, VehicleType type) throws ParkingLotException {
         ArrayList<Integer> availableSlot = getAvailableSlots(type);
         int spot = parkingRules.decideParkingSpot(type, availableSlot);
-        return park(vehicle, spot, type, colour, brand, plateNumber, row);
+        System.out.println("spot " + spot);
+        return park(vehicle, spot, type);
     }
 
     private ArrayList<Integer> getAvailableSlots(VehicleType type) throws ParkingLotException {
@@ -99,7 +96,7 @@ public class ParkingLot {
         return true;
     }
 
-    public int findMyCar(Object vehicle) throws ParkingLotException {
+    public int findMyCar(Vehicle vehicle) throws ParkingLotException {
         ParkingSlots parkingSlots = new ParkingSlots(vehicle);
         if (vehicles.contains(parkingSlots)) {
             return vehicles.indexOf(parkingSlots);
@@ -111,8 +108,9 @@ public class ParkingLot {
         ArrayList<Integer> carsMatchingColour = new ArrayList();
         IntStream.range(0, list.size())
                 .filter(index -> vehicles.get(list.get(index)) != null)
-                .filter(index -> vehicles.get(list.get(index)).colour == colour)
+                .filter(index -> vehicles.get(list.get(index)).getVehicle().colour == colour)
                 .forEach(index -> carsMatchingColour.add(list.get(index)));
+        System.out.println("COLORSS " + carsMatchingColour);
         return carsMatchingColour;
     }
 
@@ -120,8 +118,9 @@ public class ParkingLot {
         ArrayList<Integer> carsMatchingBrand = new ArrayList();
         IntStream.range(0, carList.size())
                 .filter(index -> vehicles.get(carList.get(index)) != null)
-                .filter(index -> vehicles.get(carList.get(index)).brand == brand)
+                .filter(index -> vehicles.get(carList.get(index)).getVehicle().brand == brand)
                 .forEach(index -> carsMatchingBrand.add(carList.get(index)));
+        System.out.println("brand is  " + carsMatchingBrand);
         return carsMatchingBrand;
     }
 
@@ -129,8 +128,9 @@ public class ParkingLot {
         return list;
     }
 
-    public ParkingSlots getObject(Integer index) {
-        return vehicles.get(index);
+    public Vehicle getObject(Integer index) {
+        System.out.println("index  " + vehicles.get(3).brand);
+        return vehicles.get(index).vehicle;
     }
 
     public ArrayList<Integer> calculateTime() {
@@ -148,7 +148,7 @@ public class ParkingLot {
         IntStream.range(0, list.size())
                 .filter(index -> vehicles.get(list.get(index)) != null)
                 .filter(index -> vehicles.get(list.get(index)).type == VehicleType.HANDICAP)
-                .filter(index -> vehicles.get(list.get(index)).row == "B" ||
+                .filter(index -> vehicles.get(list.get(index)).getVehicle().row == "B" ||
                         vehicles.get(list.get(index)).row == "B")
                 .forEach(index -> vehicleList.add(list.get(index)));
         return vehicleList;
