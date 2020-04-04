@@ -1,5 +1,5 @@
 package parkinglot;
 
 public enum VehicleType {
-    NORMAL, HANDICAP, LARGE;
+    NORMAL, HANDICAP, LARGE, HANDICAP_LARGE;
 }

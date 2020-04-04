@@ -16,7 +16,7 @@ public class ParkingLotTest {
     AirportSecurity airPortSecurity;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         vehicle = new Object();
         parkingLot = new ParkingLot(2);
         informer = new Informer();
