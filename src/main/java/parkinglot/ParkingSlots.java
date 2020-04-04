@@ -1,7 +1,5 @@
 package parkinglot;
 
-import java.security.PublicKey;
-
 public class ParkingSlots {
     float time;
     Vehicle vehicle;
@@ -11,7 +9,8 @@ public class ParkingSlots {
     String plateNumber;
     String row;
 
-    public ParkingSlots(Vehicle vehicle, VehicleType type) {
+    public ParkingSlots(Vehicle vehicle, VehicleType type, String row) {
+        this.row=row;
         this.time = System.currentTimeMillis() / 100;
         this.vehicle = vehicle;
         this.type = type;

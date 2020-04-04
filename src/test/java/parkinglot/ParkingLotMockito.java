@@ -37,7 +37,7 @@ public class ParkingLotMockito {
         ParkingRules parkingRules = mock(ParkingRules.class);
         ArrayList<Integer> availableSpot = new ArrayList<>(Arrays.asList(4, 3, 2, 1, 0));
         when(parkingRules.decideParkingSpot(VehicleType.NORMAL, availableSpot)).thenReturn(1);
-        parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL);
+        parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "B");
         int myCar = parkingLot.findMyCar(vehicle);
     }
 

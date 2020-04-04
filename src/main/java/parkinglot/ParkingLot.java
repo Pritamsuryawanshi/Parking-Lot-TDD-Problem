@@ -38,8 +38,8 @@ public class ParkingLot {
         this.actualCapacity = capacity;
     }
 
-    public boolean park(Vehicle vehicle, int availableSlot, VehicleType type) throws ParkingLotException {
-        ParkingSlots parkingSlots = new ParkingSlots(vehicle, type);
+    public boolean park(Vehicle vehicle, int availableSlot, VehicleType type, String row) throws ParkingLotException {
+        ParkingSlots parkingSlots = new ParkingSlots(vehicle, type, row);
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle already parked");
         vehicles.set(availableSlot, parkingSlots);
@@ -62,11 +62,11 @@ public class ParkingLot {
         throw new ParkingLotException("Vehicle is not parked");
     }
 
-    public boolean parkingAttendant(Vehicle vehicle, VehicleType type) throws ParkingLotException {
+    public boolean parkingAttendant(Vehicle vehicle, VehicleType type, String row) throws ParkingLotException {
         ArrayList<Integer> availableSlot = getAvailableSlots(type);
         int spot = parkingRules.decideParkingSpot(type, availableSlot);
         System.out.println("spot " + spot);
-        return park(vehicle, spot, type);
+        return park(vehicle, spot, type, row);
     }
 
     private ArrayList<Integer> getAvailableSlots(VehicleType type) throws ParkingLotException {
@@ -148,7 +148,7 @@ public class ParkingLot {
         IntStream.range(0, list.size())
                 .filter(index -> vehicles.get(list.get(index)) != null)
                 .filter(index -> vehicles.get(list.get(index)).type == VehicleType.HANDICAP)
-                .filter(index -> vehicles.get(list.get(index)).getVehicle().row == "B" ||
+                .filter(index -> vehicles.get(list.get(index)).row == "B" ||
                         vehicles.get(list.get(index)).row == "B")
                 .forEach(index -> vehicleList.add(list.get(index)));
         return vehicleList;

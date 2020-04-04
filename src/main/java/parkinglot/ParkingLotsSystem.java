@@ -28,6 +28,6 @@ public class ParkingLotsSystem {
     }
 
     public boolean park(Vehicle vehicle, VehicleType type) throws ParkingLotException {
-        return parkingLot.parkingAttendant(vehicle, type);
+        return parkingLot.parkingAttendant(vehicle, type, "B");
     }
 }
