@@ -1,6 +1,8 @@
 package parkinglot;
 
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -10,10 +12,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ParkingRulesMockito {
+    private static ArrayList<Integer> list;
+
+    @Before
+    public void beforeClass() throws Exception {
+        list = new ArrayList<>(Arrays.asList(0, 4, 3, 2, 1));
+    }
 
     @Test
     public void whenParkingSpotIsAskedForHandicappedDriver_ShouldReturnNearestSpot() {
-        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(0, 4, 3, 1));
         ParkingRules parkingRules = mock(ParkingRules.class);
         when(parkingRules.decideParkingSpot(VehicleType.HANDICAP, list)).thenReturn(0);
         int spot = parkingRules.decideParkingSpot(VehicleType.HANDICAP, list);
@@ -22,7 +29,6 @@ public class ParkingRulesMockito {
 
     @Test
     public void whenParkingSpotIsAskedForNormalDriver_ShouldReturnNearestSpot() {
-        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(0, 4, 3, 1));
         ParkingRules parkingRules = mock(ParkingRules.class);
         when(parkingRules.decideParkingSpot(VehicleType.NORMAL, list)).thenReturn(4);
         int spot = parkingRules.decideParkingSpot(VehicleType.NORMAL, list);
@@ -31,7 +37,6 @@ public class ParkingRulesMockito {
 
     @Test
     public void whenParkingSpotIsAskedForLargeVehicle_ShouldReturnSpot_WhichIsEmptyOnEitherSide() {
-        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(0, 4, 3, 2, 1));
         ParkingRules parkingRules = mock(ParkingRules.class);
         when(parkingRules.decideParkingSpot(VehicleType.LARGE, list)).thenReturn(2);
         int spot = parkingRules.decideParkingSpot(VehicleType.LARGE, list);
@@ -40,7 +45,6 @@ public class ParkingRulesMockito {
 
     @Test
     public void whenParkingSpotIsAskedForHandicappedLargeVehicle_ShouldReturnNearestSpot() {
-        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(0, 4, 3, 2, 1));
         ParkingRules parkingRules = mock(ParkingRules.class);
         when(parkingRules.decideParkingSpot(VehicleType.LARGE, list)).thenReturn(0);
         int spot = parkingRules.decideParkingSpot(VehicleType.LARGE, list);
