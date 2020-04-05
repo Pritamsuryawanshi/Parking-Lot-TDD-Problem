@@ -1,7 +1,5 @@
 package parkinglot;
 
-import org.apache.commons.lang3.time.StopWatch;
-
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -12,7 +10,6 @@ public class ParkingLot {
     Informer informer;
     ParkingRules parkingRules;
     ArrayList<Integer> list;
-
 
     public ParkingLot(int capacity) {
         list = new ArrayList<>();
@@ -78,7 +75,7 @@ public class ParkingLot {
         return availableSlots;
     }
 
-    public boolean isTimeSet() {
+    public boolean isTimeSet()  {
         ArrayList<Integer> filledSlots = new ArrayList();
         IntStream.range(0, vehicles.size())
                 .filter(index -> vehicles.get(index) != null)
@@ -101,7 +98,7 @@ public class ParkingLot {
         throw new ParkingLotException("Car is not Parked");
     }
 
-    public ArrayList<Integer> findCarByColour(ArrayList<Integer> list, String colour) {
+    public ArrayList<Integer> findCarByColour(ArrayList<Integer> list, String colour) throws ParkingLotException {
         ArrayList<Integer> carsMatchingColour = new ArrayList();
         IntStream.range(0, list.size())
                 .filter(index -> vehicles.get(list.get(index)) != null)
@@ -121,6 +118,7 @@ public class ParkingLot {
 
     public ArrayList<Integer> getVehicleList() {
         return list;
+
     }
 
     public Vehicle getObject(Integer index) {
@@ -143,7 +141,7 @@ public class ParkingLot {
                 .filter(index -> vehicles.get(list.get(index)) != null)
                 .filter(index -> vehicles.get(list.get(index)).type == VehicleType.HANDICAP)
                 .filter(index -> vehicles.get(list.get(index)).row == "B" ||
-                        vehicles.get(list.get(index)).row == "B")
+                        vehicles.get(list.get(index)).row == "D")
                 .forEach(index -> vehicleList.add(list.get(index)));
         return vehicleList;
     }

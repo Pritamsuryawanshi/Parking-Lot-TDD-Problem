@@ -1,5 +1,6 @@
 package parkinglot;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,7 +27,6 @@ public class ParkingLotTest {
         owner = new ParkingLotOwner();
         airPortSecurity = new AirportSecurity();
     }
-
 
     @Test
     public void givenAVehicle_WhenParked_ShouldReturnTrue() {
@@ -133,6 +133,24 @@ public class ParkingLotTest {
     }
 
     @Test
+    public void givenCapacityAs2_WhenParkedMoreShouldThrowException() {
+        Vehicle vehicle2 = new Vehicle("TOYOTA", "WHITE", "MH 16 244");
+        Vehicle vehicle3 = new Vehicle("TOYOTA", "WHITE", "MH 16 244");
+        parkingLot.setCapacity(2);
+        try {
+            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "B");
+            parkingLot.parkingAttendant(vehicle2, VehicleType.NORMAL, "B");
+            parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "B");
+        } catch (ParkingLotException e) {
+            assertEquals("Lot is full", e.getMessage());
+        }
+
+        boolean isParked1 = parkingLot.isVehicleParked(vehicle);
+        boolean isParked2 = parkingLot.isVehicleParked(vehicle2);
+        assertTrue(isParked1 && isParked2);
+    }
+
+    @Test
     public void givenParkingLotSpace_WhenFull_ShouldInformTheSecurity() throws ParkingLotException {
         AirportSecurity airportSecurity = new AirportSecurity();
         Vehicle vehicle2 = new Vehicle("TOYOTA", "WHITE", "MH 16 244");
@@ -213,7 +231,15 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenCarNotParked_AndTimeIsNotSte_ShouldReturnFalse() {
+    public void givenCarUnParked_AndTimeIsNotSet_ShouldReturnFalse() throws ParkingLotException {
+        parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "B");
+        parkingLot.unPark(vehicle);
+        boolean timeSet = parkingLot.isTimeSet();
+        assertFalse(timeSet);
+    }
+
+    @Test
+    public void givenCarNotParked_AndTimeIsNotSet_ShouldReturnFalse() {
         boolean timeSet = parkingLot.isTimeSet();
         assertFalse(timeSet);
     }
@@ -278,6 +304,17 @@ public class ParkingLotTest {
     //multiple lots
 
     @Test
+    public void givenVehicle_WhenParked_ShouldReturnTrue() throws ParkingLotException {
+        Vehicle vehicle2 = new Vehicle();
+        parkingLotsSystem.registerParkingLots(airPortSecurity);
+        parkingLotsSystem.park(vehicle, VehicleType.NORMAL, "B");
+        parkingLotsSystem.park(vehicle2, VehicleType.NORMAL, "B");
+        boolean vehicleParked = parkingLotsSystem.isVehicleParked(vehicle2);
+        boolean vehicleParked1 = parkingLotsSystem.isVehicleParked(vehicle2);
+        assertTrue(vehicleParked && vehicleParked1);
+    }
+
+    @Test
     public void givenParkingLot_WhenLotIsFull_ShouldInfromAirPortSecurityStaff() throws ParkingLotException {
         parkingLotsSystem.registerParkingLots(airPortSecurity);
         Vehicle vehicle2 = new Vehicle();
@@ -289,7 +326,7 @@ public class ParkingLotTest {
 
     @Test
     public void givenVehicle_WhenParkedUsingParkingSystem_ShouldReturnTrue() throws ParkingLotException {
-        parkingLotsSystem.park(vehicle, VehicleType.NORMAL);
+        parkingLotsSystem.park(vehicle, VehicleType.NORMAL, "B");
         boolean vehicleParked = parkingLot.isVehicleParked(vehicle);
         assertTrue(vehicleParked);
     }

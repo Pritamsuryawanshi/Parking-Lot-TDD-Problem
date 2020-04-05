@@ -27,7 +27,7 @@ public class ParkingLotsSystem {
         informer.registerParkingLotObserver(observer);
     }
 
-    public boolean park(Vehicle vehicle, VehicleType type) throws ParkingLotException {
-        return parkingLot.parkingAttendant(vehicle, type, "B");
+    public boolean park(Vehicle vehicle, VehicleType type, String row) throws ParkingLotException {
+        return parkingLot.parkingAttendant(vehicle, type, row);
     }
 }

@@ -1,12 +1,9 @@
 package parkinglot;
 
 public class ParkingSlots {
-    float time;
+    float time = 0;
     Vehicle vehicle;
     VehicleType type;
-    String colour;
-    String brand;
-    String plateNumber;
     String row;
 
     public ParkingSlots(Vehicle vehicle, VehicleType type, String row) {
