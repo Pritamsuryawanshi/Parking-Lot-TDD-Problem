@@ -1,6 +1,5 @@
 package parkinglot;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -341,23 +340,20 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenLargeVehicles_WhenParked_ShouldReturnTrue() {
+    public void givenLargeVehicles_WhenParked_ShouldReturnTrue() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(7);
         Vehicle vehicle = new Vehicle("TOYOTA", "GREEN", "MH 16 244");
         Vehicle vehicleLarge = new Vehicle("BMW", "GREEN", "MH 16 244");
         Vehicle vehicle2 = new Vehicle("BMW", "GREEN", "MH 16 244");
         Vehicle vehicle3 = new Vehicle("TOYOTA", "WHITE", "MH 16 244");
         Vehicle vehicle4 = new Vehicle("BMW", "GREEN", "MH 16 244");
-        try {
-            parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "B");
-            parkingLot.parkingAttendant(vehicle2, VehicleType.LARGE, "B");
-            parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "B");
-            parkingLot.parkingAttendant(vehicle4, VehicleType.LARGE, "B");
-            parkingLot.parkingAttendant(vehicleLarge, VehicleType.LARGE, "B");
-            boolean isParked = parkingLot.isVehicleParked(vehicle3);
-            assertTrue(isParked);
-        } catch (ParkingLotException e) {
-        }
+        parkingLot.parkingAttendant(vehicle, VehicleType.NORMAL, "B");
+        parkingLot.parkingAttendant(vehicle2, VehicleType.LARGE, "B");
+        parkingLot.parkingAttendant(vehicle3, VehicleType.NORMAL, "B");
+        parkingLot.parkingAttendant(vehicle4, VehicleType.LARGE, "B");
+        parkingLot.parkingAttendant(vehicleLarge, VehicleType.LARGE, "B");
+        boolean isParked = parkingLot.isVehicleParked(vehicle3);
+        assertTrue(isParked);
     }
 
     @Test

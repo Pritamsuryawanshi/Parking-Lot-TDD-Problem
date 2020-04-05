@@ -75,7 +75,7 @@ public class ParkingLot {
         return availableSlots;
     }
 
-    public boolean isTimeSet()  {
+    public boolean isTimeSet() {
         ArrayList<Integer> filledSlots = new ArrayList();
         IntStream.range(0, vehicles.size())
                 .filter(index -> vehicles.get(index) != null)
