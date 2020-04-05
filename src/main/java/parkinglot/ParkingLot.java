@@ -12,11 +12,9 @@ public class ParkingLot {
     Informer informer;
     ParkingRules parkingRules;
     ArrayList<Integer> list;
-    StopWatch watch;
 
 
     public ParkingLot(int capacity) {
-        watch = new StopWatch();
         list = new ArrayList<>();
         parkingRules = new ParkingRules();
         informer = new Informer();
@@ -65,7 +63,6 @@ public class ParkingLot {
     public boolean parkingAttendant(Vehicle vehicle, VehicleType type, String row) throws ParkingLotException {
         ArrayList<Integer> availableSlot = getAvailableSlots(type);
         int spot = parkingRules.decideParkingSpot(type, availableSlot);
-        System.out.println("spot " + spot);
         return park(vehicle, spot, type, row);
     }
 
@@ -110,7 +107,6 @@ public class ParkingLot {
                 .filter(index -> vehicles.get(list.get(index)) != null)
                 .filter(index -> vehicles.get(list.get(index)).getVehicle().colour == colour)
                 .forEach(index -> carsMatchingColour.add(list.get(index)));
-        System.out.println("COLORSS " + carsMatchingColour);
         return carsMatchingColour;
     }
 
@@ -120,7 +116,6 @@ public class ParkingLot {
                 .filter(index -> vehicles.get(carList.get(index)) != null)
                 .filter(index -> vehicles.get(carList.get(index)).getVehicle().brand == brand)
                 .forEach(index -> carsMatchingBrand.add(carList.get(index)));
-        System.out.println("brand is  " + carsMatchingBrand);
         return carsMatchingBrand;
     }
 
@@ -129,7 +124,6 @@ public class ParkingLot {
     }
 
     public Vehicle getObject(Integer index) {
-        System.out.println("index  " + vehicles.get(3).brand);
         return vehicles.get(index).vehicle;
     }
 

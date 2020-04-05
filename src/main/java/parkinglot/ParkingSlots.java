@@ -10,7 +10,7 @@ public class ParkingSlots {
     String row;
 
     public ParkingSlots(Vehicle vehicle, VehicleType type, String row) {
-        this.row=row;
+        this.row = row;
         this.time = System.currentTimeMillis() / 100;
         this.vehicle = vehicle;
         this.type = type;
